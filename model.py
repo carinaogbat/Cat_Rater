@@ -27,6 +27,7 @@ class Photo(db.Model):
     __tablename__ = "photos"
 
     photo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    photo_url = db.Column(db.String)
     username = db.Column(db.ForeignKey("users.username"))
     text = db.Column(db.String)
 
