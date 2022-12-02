@@ -6,6 +6,7 @@ from jinja2 import StrictUndefined
 
 app = Flask(__name__)
 app.secret_key = "dev"
+app.jinja_env.undefined = StrictUndefined
 
 
 
@@ -15,8 +16,20 @@ def homepage():
 
     return render_template("homepage.html")
 
+@app.route("/login")
+def login():
+    """Logs user into the session"""
 
-@app.route("/allratings")
+    return redirect("myprofile/<username>")
+
+@app.route("/signup")
+def sign_up():
+    """Signs a user up and adds them to the database"""
+
+    return redirect("my_profile/<username>")
+
+
+@app.route("/all-ratings")
 def all_photos():
     """View all rated photos."""
 
@@ -27,12 +40,21 @@ def all_photos():
 
 @app.route("/photos/<photo_id>")
 def show_photo(photo_id):
-    """Show details on a particular movie."""
+    """Show details on a particular photo."""
 
-    movie = crud.get_photo_by_id(photo_id)
+    photo = crud.get_photo_by_id(photo_id)
 
-    return render_template("photo_details.html", movie=movie)
+    return render_template("photo_details.html", photo=photo)
 
+@app.route("/myprofile/<username>")
+def show_user_profile(username):
+    """Show your profile page"""
+
+    user = crud.get_user_by_username(username)
+    photos = crud.get_users_photos(username)
+    ratings = crud.get_users_ratings(username)
+
+    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
 @app.route("/users/<username>")
 def show_user(username):

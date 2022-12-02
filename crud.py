@@ -53,6 +53,9 @@ def get_users_photos(username):
 
     return Photo.query.filter(Photo.username == username)
 
+def get_users_ratings(username):
+    """Returns user ratings"""
+
 
 def get_photo_by_id(photo_id):
     """Gets a photo by ID"""
