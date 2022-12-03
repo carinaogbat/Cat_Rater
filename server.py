@@ -56,6 +56,12 @@ def show_user_profile(username):
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
+@app.route("ratings/<username>")
+def show_rated_photos():
+    """Shows photos rated by user"""
+
+    return render_template("photos_rated_by_user.html")
+
 @app.route("/users/<username>")
 def show_user(username):
     """Show details on a particular user."""
