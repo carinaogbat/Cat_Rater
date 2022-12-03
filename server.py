@@ -11,10 +11,12 @@ app.jinja_env.undefined = StrictUndefined
 
 
 @app.route("/")
-def homepage():
-    """View homepage."""
+def all_photos():
+    """View all rated photos."""
 
-    return render_template("homepage.html")
+    photos = crud.get_all_photos()
+
+    return render_template("homepage.html", photos=photos)
 
 @app.route("/login")
 def login():
@@ -27,15 +29,6 @@ def sign_up():
     """Signs a user up and adds them to the database"""
 
     return redirect("my_profile/<username>")
-
-
-@app.route("/all-ratings")
-def all_photos():
-    """View all rated photos."""
-
-    photos = crud.get_all_photos()
-
-    return render_template("all_photos.html", photos=photos)
 
 
 @app.route("/photos/<photo_id>")
@@ -56,7 +49,7 @@ def show_user_profile(username):
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
-@app.route("ratings/<username>")
+@app.route("/ratings/<username>")
 def show_rated_photos():
     """Shows photos rated by user"""
 
