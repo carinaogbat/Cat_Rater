@@ -28,7 +28,7 @@ def login():
 def sign_up():
     """Signs a user up and adds them to the database"""
 
-    return redirect("my_profile/<username>")
+    return redirect("myprofile/<username>")
 
 
 @app.route("/photos/<photo_id>")
