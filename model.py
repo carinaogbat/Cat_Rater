@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -29,11 +30,13 @@ class Photo(db.Model):
     username = db.Column(db.ForeignKey("users.username"))
     text = db.Column(db.String)
     name = db.Column(db.String(25))
+    # time_created = db.Column(DateTime(timezone=True), server_default=func.now())
+    # time_updated = db.Column(DateTime(timezone=True), onupdate=func.now())
 
     ratings = db.relationship("Rating", back_populates="photo")
 
     def __repr__(self):
-        return f"<Photo photo_id={self.movie_id} from username={self.username}>"
+        return f"<Photo photo_id={self.photo_id} from username={self.username}>"
 
 
 class Rating(db.Model):

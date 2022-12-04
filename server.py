@@ -55,8 +55,9 @@ def show_user(username):
 
     user = crud.get_user_by_username(username)
     photos = crud.get_users_photos(username)
+    ratings = crud.get_users_ratings(user.user_id)
 
-    return render_template("user_details.html", user=user, photos=photos)
+    return render_template("user_details.html", user=user, photos=photos, ratings=ratings)
 
 
 if __name__ == "__main__":
