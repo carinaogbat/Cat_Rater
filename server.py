@@ -59,6 +59,12 @@ def show_user(username):
 
     return render_template("user_details.html", user=user, photos=photos, ratings=ratings)
 
+@app.route("/search")
+def search():
+    """Searches site by user selected parameters""" 
+
+    return render_template("search.html")
+
 
 if __name__ == "__main__":
     connect_to_db(app)
