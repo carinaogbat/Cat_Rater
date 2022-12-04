@@ -29,10 +29,10 @@ model.db.session.commit()
 
 photos_in_db = []
 for photo in data:
-    url, text, username = (
-        photo["profile_img"], photo["bio"], photo["username"]
+    url, name, text, username = (
+        photo["profile_img"], photo["pet"], photo["bio"], photo["username"]
     )
-    db_photo = crud.create_photo(url, text, username)
+    db_photo = crud.create_photo(url, name, text, username)
     photos_in_db.append(db_photo)
 
 model.db.session.add_all(photos_in_db)
@@ -41,7 +41,7 @@ model.db.session.commit()
 users = crud.get_all_users()
 for user in users:
     random_cat = choice(photos_in_db)
-    score = randint(1, 5)
+    score = randint(11, 20)
 
     rating = crud.create_rating(user=user, photo=random_cat, score=score)
     model.db.session.add(rating)

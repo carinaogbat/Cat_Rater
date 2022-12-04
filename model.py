@@ -28,6 +28,7 @@ class Photo(db.Model):
     url = db.Column(db.String)
     username = db.Column(db.ForeignKey("users.username"))
     text = db.Column(db.String)
+    name = db.Column(db.String(25))
 
     ratings = db.relationship("Rating", back_populates="photo")
 

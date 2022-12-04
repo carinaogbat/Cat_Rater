@@ -9,10 +9,10 @@ def create_user(username, email, password):
 
     return user
 
-def create_photo(url, text, username):
+def create_photo(url, name, text, username):
     """Creates a photo"""
 
-    photo = Photo(url=url, text=text, username=username)
+    photo = Photo(url=url, name=name, text=text, username=username)
 
     return photo
 

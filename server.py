@@ -49,12 +49,6 @@ def show_user_profile(username):
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
-@app.route("/ratings/<username>")
-def show_rated_photos():
-    """Shows photos rated by user"""
-
-    return render_template("photos_rated_by_user.html")
-
 @app.route("/users/<username>")
 def show_user(username):
     """Show details on a particular user."""
@@ -62,7 +56,7 @@ def show_user(username):
     user = crud.get_user_by_username(username)
     photos = crud.get_users_photos(username)
 
-    return render_template("user_details.html", user=user)
+    return render_template("user_details.html", user=user, photos=photos)
 
 
 if __name__ == "__main__":
