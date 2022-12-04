@@ -40,11 +40,10 @@ model.db.session.commit()
 
 users = crud.get_all_users()
 for user in users:
-    random_cat = choice(photos_in_db)
-    score = randint(11, 20)
-
-    rating = crud.create_rating(user=user, photo=random_cat, score=score)
-    model.db.session.add(rating)
+        for photo in photos_in_db:
+            score = randint(11, 20)
+            rating = crud.create_rating(user=user, photo=photo, score=score)
+            model.db.session.add(rating)
 
 model.db.session.commit()
 
