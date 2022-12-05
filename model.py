@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from sqlalchemy import func, DateTime
 
 db = SQLAlchemy()
 
@@ -30,8 +30,8 @@ class Photo(db.Model):
     username = db.Column(db.ForeignKey("users.username"))
     text = db.Column(db.String)
     name = db.Column(db.String(25))
-    # time_created = db.Column(DateTime(timezone=True), server_default=func.now())
-    # time_updated = db.Column(DateTime(timezone=True), onupdate=func.now())
+    time_created = db.Column(DateTime(timezone=True), server_default=func.now())
+    time_updated = db.Column(DateTime(timezone=True), onupdate=func.now())
 
     ratings = db.relationship("Rating", back_populates="photo")
 

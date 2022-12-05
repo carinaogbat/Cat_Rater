@@ -19,33 +19,103 @@ def all_photos():
     return render_template("homepage.html", photos=photos)
 
 @app.route("/login")
+def display_login_page():
+    """Displays login page"""
+
+    user = session.get("username")
+    if user:
+        flash("You are already signed in")
+        return redirect("/myprofile/<username>")
+    else:
+
+        return render_template("login.html")
+
+@app.route("/login", methods=["POST"])
 def login():
     """Logs user into the session"""
 
-    return redirect("myprofile/<username>")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    username = request.form.get("username")
+
+    user = crud.get_user_by_email(email)
+
+    if not user or user.password != password:
+        flash("Error: the email or password you entered was incorrect")
+        return redirect("/login")
+    else:
+        session["username"] = user.username
+        flash(f"Welcome back {user.username}")
+
+        return redirect("/myprofile/<username>")
 
 @app.route("/signup")
+def display_signup():
+    """Displays sign up page"""
+
+    user = session.get("username")
+    if user:
+        flash("You are already signed in")
+        return redirect("/myprofile/<username>")
+    else:
+
+        return render_template("signup.html")
+
+@app.route("/signup", methods=["POST"])
 def sign_up():
     """Signs a user up and adds them to the database"""
 
-    return redirect("myprofile/<username>")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    username = request.form.get("username")
+
+    user = crud.get_user_by_email(email)
+
+    if user:
+        flash("Error, there is already an account with this email, please try again")
+        return redirect("/myprofile/<username>")
+    else:
+        user = crud.create_user(username=username, email=email, password=password)
+        db.session.add(user)
+        db.session.commit()
+        flash("Account created")
+
+    return redirect("/myprofile/<username>")
 
 
-@app.route("/photos/<photo_id>")
+@app.route("/photos/<photo_id>", methods=["POST"])
 def show_photo(photo_id):
     """Show details on a particular photo."""
 
     photo = crud.get_photo_by_id(photo_id)
+    username = session.get("username")
+    user_rating = int(request.form.get("rating"))
+
+    if username is None:
+        flash("Sorry, you must be signed in to rate a cat.")
+    elif not user_rating:
+        flash("Please enter your rating")
+    else:
+        user = crud.get_user_by_username(username)
+
+        rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
+        db.session.add(rating)
+        db.session.commit()
 
     return render_template("photo_details.html", photo=photo)
 
 @app.route("/myprofile/<username>")
 def show_user_profile(username):
     """Show your profile page"""
+    username = session.get("username")
+    if username is None:
+        flash("Please sign in to see your profile page")
+        return redirect("/login")
 
-    user = crud.get_user_by_username(username)
-    photos = crud.get_users_photos(username)
-    ratings = crud.get_users_ratings(username)
+    else:
+        user = crud.get_user_by_username(username)
+        photos = crud.get_users_photos(username)
+        ratings = crud.get_users_ratings(user.user_id)
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
