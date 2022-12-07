@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up{% endblock %}
+
+{% block body %}
+  <h1>Welcome to the cat rater!</h1>
+  <h2>Where you rate the most boopable floofs!</h2>
+ <h3>Create your account below:</h3>
+  <form action="/signup" method="POST">
+    <p>
+        Email <input type="text" name ="email">
+    </p>
+    <p>
+        Password <input type="text" name="password">
+    </p>
+    <p>
+        Username <input type="text" name="username"
+    </p>
+    <p>
+        <input type="submit">
+    </p>
+  </form>
+{% endblock %}

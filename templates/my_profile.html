@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} Profile {{user.username}} {% endblock %}
+
+{% block body %}
+  <h1>Welcome {{user.username}}</h1>
+  <h2>Here's your rated pictures</h2>
+  {% for photo in photos %}
+  <div id="all-photos">
+    <img src="/{{photo.url}}" height="256" width="180">
+    {{photo.name}}, rated {{photo.ratings}} out of 10!
+  </div>
+  {% endfor %}
+  <h2>This will be the link to upload a photo</h2>
+  <h3>here's the ratings you've given</h3>
+  {% for rating in ratings %}
+  <div>
+    <img src="/{{rating.photo.url}}" height="256" width="180">
+    {{rating.photo.name}} Scored {{rating.score}} out of 10!
+  </div>
+  {% endfor %}
+
+{% endblock %}

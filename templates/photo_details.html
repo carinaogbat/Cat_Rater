@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Photo Details{% endblock %}
+
+{% block body %}
+  <h1>display photo</h1>
+  <h2>have photo text and username here</h2>
+  <h2>rate photo</h2>
+  <div id="full-size-photo">
+    <img src="{{photo.url}}" height="512" width="360">
+    This cat has been rated {{photo.rating}} out of 10!
+  </div>
+  <form action="/photos/{{ photo.photo_id }}" method="POST">
+    Enter a number between 1 and 10 <input type="text" name="rating">
+    <p>
+    <input type="submit">
+  </p>
+
+  </form>
+  
+  
+{% endblock %}

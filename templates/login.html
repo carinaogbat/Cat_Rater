@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Cat Ratings Home{% endblock %}
+
+{% block body %}
+  <h1>Welcome to the cat rater!</h1>
+  <h2>Where you rate the most boopable floofs!</h2>
+ <h3> Log In Below:</h3>
+ <form action="/login" method="POST">
+  <p>
+    Email <input type="text" name="email">
+  </p>
+  <p>
+    Password <input type="text" name="password">
+  </p>
+  <p>
+    <input type="submit">
+  </p>
+ </form>
+
+{% endblock %}

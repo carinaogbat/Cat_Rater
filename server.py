@@ -134,7 +134,7 @@ def show_photo(photo_id):
         rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
         db.session.add(rating)
         db.session.commit()
-        flash(f"You rated this cat a {{rating}} out of 10!")
+        flash(f"You rated this cat a {rating} out of 10!")
 
     return render_template("photo_details.html", photo=photo)
 

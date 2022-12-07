@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}Cat Ratings Home{% endblock %}
+
+{% block body %}
+  <h1>Welcome to the cat rater!</h1>
+  <h2>Where you rate the most boopable floofs!</h2>
+
+  <h3>Want to rate floofs? <a href="login">Log in</a> or <a href="/signup">sign up</a></h3>
+
+  {% for photo in photos %}
+    <div id="all-photos">
+    <img src="/{{photo.url}}" height="256" width="180">
+        This is {{photo.name}} Rated {{photo.ratings}} out of 10!
+        Submitted By:
+      <a href="/users/{{photo.username}}">{{photo.username}}</a>
+    </div>
+  
+  {% endfor %}
+{% endblock %}
