@@ -49,6 +49,25 @@ def login():
 
         return redirect("/myprofile/<username>")
 
+@app.route("/logout")
+def display_logout():
+    """Displays logout page"""
+
+    return render_template("logout.html")
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    """Logs out a user"""
+
+    user=session.get("username")
+    if user:
+        session["username"] = False
+        flash("You have been signed out")
+    else:
+        flash("Error, you are not signed in")
+
+    return redirect("/")
+
 @app.route("/signup")
 def display_signup():
     """Displays sign up page"""
@@ -82,6 +101,20 @@ def sign_up():
 
     return redirect("/myprofile/<username>")
 
+@app.route("/photos/<photo_id>")
+def photo_details():
+    """Show details of photo"""
+
+    return render_template("photo_details.html")
+
+@app.route("/photos/<photo_id>")
+def display_photo_details(photo_id):
+    """Displays photo details"""
+
+    photo = crud.get_photo_by_id(photo_id)
+
+    return render_template("photo_details.html", photo=photo)
+
 
 @app.route("/photos/<photo_id>", methods=["POST"])
 def show_photo(photo_id):
@@ -101,6 +134,7 @@ def show_photo(photo_id):
         rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
         db.session.add(rating)
         db.session.commit()
+        flash(f"You rated this cat a {{rating}} out of 10!")
 
     return render_template("photo_details.html", photo=photo)
 
@@ -126,6 +160,7 @@ def show_user(username):
     user = crud.get_user_by_username(username)
     photos = crud.get_users_photos(username)
     ratings = crud.get_users_ratings(user.user_id)
+    
 
     return render_template("user_details.html", user=user, photos=photos, ratings=ratings)
 
@@ -134,6 +169,8 @@ def search():
     """Searches site by user selected parameters""" 
 
     return render_template("search.html")
+
+
 
 
 if __name__ == "__main__":
