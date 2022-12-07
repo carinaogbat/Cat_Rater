@@ -1,4 +1,5 @@
 from model import db, User, Photo, Rating, connect_to_db
+from sqlalchemy import func
 
 
 def create_user(username, email, password):
@@ -57,12 +58,17 @@ def get_users_ratings(user_id):
     """Returns user ratings"""
 
     return Rating.query.filter(Rating.user_id == user_id)
-
+    
 
 def get_photo_by_id(photo_id):
     """Gets a photo by ID"""
 
     return Photo.query.get(photo_id)
+
+def get_photo_rating_average(photo_id):
+    """Returns a photos average score"""
+
+    average_rating = Photo.query(func.avg(photo_id.rating)).filter(Photo.photo_id == photo_id)
 
 # if __name__ == '__main__':
 #     from server import app

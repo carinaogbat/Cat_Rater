@@ -101,11 +101,11 @@ def sign_up():
 
     return redirect("/myprofile/<username>")
 
-@app.route("/photos/<photo_id>")
-def photo_details():
-    """Show details of photo"""
+# @app.route("/photos/<photo_id>")
+# def photo_details():
+#     """Show details of photo"""
 
-    return render_template("photo_details.html")
+#     return render_template("photo_details.html")
 
 @app.route("/photos/<photo_id>")
 def display_photo_details(photo_id):
@@ -121,6 +121,7 @@ def show_photo(photo_id):
     """Show details on a particular photo."""
 
     photo = crud.get_photo_by_id(photo_id)
+    photo_average_rating = crud.get_photo_rating_average(photo_id)
     username = session.get("username")
     user_rating = int(request.form.get("rating"))
 
@@ -136,7 +137,7 @@ def show_photo(photo_id):
         db.session.commit()
         flash(f"You rated this cat a {rating} out of 10!")
 
-    return render_template("photo_details.html", photo=photo)
+    return render_template("photo_details.html", photo=photo, photo_rating=photo_average_rating)
 
 @app.route("/myprofile/<username>")
 def show_user_profile(username):
@@ -150,6 +151,13 @@ def show_user_profile(username):
         user = crud.get_user_by_username(username)
         photos = crud.get_users_photos(username)
         ratings = crud.get_users_ratings(user.user_id)
+        avg_rating = 0
+        total_ratings = 0
+        for rating in photos.ratings:
+            all_ratings += rating
+            total_ratings += 1
+            avg_rating = all_ratings/total_ratings
+
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
