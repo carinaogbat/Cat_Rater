@@ -22,8 +22,8 @@ def all_photos():
 def display_login_page():
     """Displays login page"""
 
-    user = session.get("username")
-    if user:
+    user_in_session = session.get("username")
+    if user_in_session:
         flash("You are already signed in")
         return redirect("/myprofile/<username>")
     else:
@@ -59,9 +59,9 @@ def display_logout():
 def logout():
     """Logs out a user"""
 
-    user=session.get("username")
-    if user:
-        session["username"] = False
+    user_in_session=session.get("username")
+    if user_in_session:
+        session["username"] = None
         flash("You have been signed out")
     else:
         flash("Error, you are not signed in")
@@ -151,15 +151,15 @@ def show_user_profile(username):
         user = crud.get_user_by_username(username)
         photos = crud.get_users_photos(username)
         ratings = crud.get_users_ratings(user.user_id)
-        avg_rating = 0
-        total_ratings = 0
-        for rating in photos.ratings:
-            all_ratings += rating
-            total_ratings += 1
-            avg_rating = all_ratings/total_ratings
+        # avg_rating = 0
+        # total_ratings = 0
+        # for rating in photos.ratings:
+        #     all_ratings += rating
+        #     total_ratings += 1
+        #     avg_rating = all_ratings/total_ratings
 
 
-    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
+    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings,)
 
 @app.route("/users/<username>")
 def show_user(username):
