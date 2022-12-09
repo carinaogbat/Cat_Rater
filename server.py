@@ -1,6 +1,11 @@
 from flask import (Flask, jsonify, render_template, request, flash, session, redirect)
 from model import connect_to_db, db, User, Photo, Rating, connect_to_db
+import cloudinary.uploader
+import os
 import crud
+CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
+CLOUDINARY_SECRET = os.environ["CLOUDINARY_SECRET"]
+CLOUD_NAME = "dkiisulmn"
 
 from jinja2 import StrictUndefined
 
@@ -14,8 +19,8 @@ app.jinja_env.undefined = StrictUndefined
 def all_photos():
     """View all rated photos."""
 
-    photos = crud.get_all_photos_with_ratings()
-    # photos = crud.get_all_photos()
+    # photos = crud.get_all_photos_with_ratings()
+    photos = crud.get_all_photos()
     # photo_ratings = []
     # for photo in photos:
     #     rating = round(crud.get_photo_rating_average(photo.photo_id))
@@ -145,6 +150,21 @@ def show_photo(photo_id):
     return render_template("photo_details.html", photo=photo, photo_rating=photo_average_rating)
 
 @app.route("/myprofile/<username>")
+def display_user_profile(username):
+    """Show your profile page"""
+    username = session.get("username")
+    if username is None:
+        flash("Please sign in to see your profile page")
+        return redirect("/login")
+
+    else:
+        user = crud.get_user_by_username(username)
+        photos = crud.get_users_photos(username)
+        ratings = crud.get_users_ratings(user.user_id)
+
+    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
+
+@app.route("/myprofile/<username>", methods=["POST"])
 def show_user_profile(username):
     """Show your profile page"""
     username = session.get("username")
@@ -156,15 +176,12 @@ def show_user_profile(username):
         user = crud.get_user_by_username(username)
         photos = crud.get_users_photos(username)
         ratings = crud.get_users_ratings(user.user_id)
-        # avg_rating = 0
-        # total_ratings = 0
-        # for rating in photos.ratings:
-        #     all_ratings += rating
-        #     total_ratings += 1
-        #     avg_rating = all_ratings/total_ratings
 
+    my_file = request.files['my-file']
+    result = cloudinary.uploader.upload(my_file, api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET, cloud_name=CLOUD_NAME)
+    img_url = result['secure_url']
 
-    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings,)
+    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
 @app.route("/users/<username>")
 def show_user(username):

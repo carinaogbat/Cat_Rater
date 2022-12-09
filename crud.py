@@ -70,10 +70,10 @@ def get_photo_rating_average(photo_id):
 
     return db.session.query(func.avg(Rating.score)).filter(Rating.photo_id == photo_id).first()[0]
 
-def get_all_photos_with_ratings():
-    """Returns all photos with ratings"""
+# def get_all_photos_with_ratings():
+#     """Returns all photos with ratings"""
 
-    return db.session.query(func.avg(Rating.score)).filter(Rating.photo_id).all()
+#     return db.session.query(func.avg(Rating.score)).filter(Rating.photo_id).all()
 
 
 # if __name__ == '__main__':
