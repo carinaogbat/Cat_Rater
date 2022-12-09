@@ -68,7 +68,13 @@ def get_photo_by_id(photo_id):
 def get_photo_rating_average(photo_id):
     """Returns a photos average score"""
 
-    average_rating = Photo.query(func.avg(photo_id.rating)).filter(Photo.photo_id == photo_id)
+    return db.session.query(func.avg(Rating.score)).filter(Rating.photo_id == photo_id).first()[0]
+
+def get_all_photos_with_ratings():
+    """Returns all photos with ratings"""
+
+    return db.session.query(func.avg(Rating.score)).filter(Rating.photo_id).all()
+
 
 # if __name__ == '__main__':
 #     from server import app
