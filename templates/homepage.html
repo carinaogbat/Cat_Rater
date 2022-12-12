@@ -10,10 +10,11 @@
   {% for photo in photos %}
     <div id="all-photos">
     <img src="/{{photo.url}}" height="256" width="180">
-        This is {{photo.name}} Rated {{photo.ratings}} out of 10!
+        This is {{photo.name}} Rated photo.ratings out of 10!
         Submitted By:
       <a href="/users/{{photo.username}}">{{photo.username}}</a>
     </div>
   
   {% endfor %}
+  <script src="cat_rater.js"></script>
 {% endblock %}

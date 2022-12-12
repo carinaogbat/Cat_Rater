@@ -20,11 +20,16 @@ def all_photos():
     """View all rated photos."""
 
     # photos = crud.get_all_photos_with_ratings()
+    # photos = []
     photos = crud.get_all_photos()
-    # photo_ratings = []
-    # for photo in photos:
-    #     rating = round(crud.get_photo_rating_average(photo.photo_id))
-    #     photo_ratings.append({"photo.photo_id":rating})
+    # for photo in all_photos:
+    #     photo.ratings = round(crud.get_photo_rating_average(photo.photo_id))
+    #     photos.append(photo)
+    photo_ratings = []
+    for photo in photos:
+        rating = round(crud.get_photo_rating_average(photo.photo_id))
+        photo_ratings.append({photo.photo_id:rating})
+    
 
     return render_template("homepage.html", photos=photos)
 

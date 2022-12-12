@@ -11,8 +11,8 @@
   </div>
   {% endfor %}
   <h2>Add your next floof to rate below</h2>
-  <form action="/post-form-data" method="post" enctype="multipart/form-data">
-    <input type="file" name="my-file">
+  <form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
+    <input type="file" name="my-file" id="file">
     <input type="submit">
   </form>
 
@@ -23,5 +23,5 @@
     {{rating.photo.name}} Scored {{rating.score}} out of 10!
   </div>
   {% endfor %}
-
+  <script src="cat_rater.js"></script>
 {% endblock %}
