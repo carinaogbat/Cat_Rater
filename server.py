@@ -182,9 +182,16 @@ def show_user_profile(username):
         photos = crud.get_users_photos(username)
         ratings = crud.get_users_ratings(user.user_id)
 
+    text = request.json.get("text")
+    name = request.json.get("name")
     my_file = request.files['my-file']
     result = cloudinary.uploader.upload(my_file, api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET, cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
+    
+    new_photo = crud.create_photo(url=img_url, name=name, text=text, username=username)
+    db.session.add(new_photo)
+    db.session.commit
+
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
 
