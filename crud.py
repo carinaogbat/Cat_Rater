@@ -2,18 +2,17 @@ from model import db, User, Photo, Rating, connect_to_db
 from sqlalchemy import func
 
 
-def create_user(username, email, password):
+def create_user(email, password, username):
     """Creates a User"""
 
-    user = User(username=username, email=email, 
-    password=password)
+    user = User(email=email, password=password, username=username)
 
     return user
 
-def create_photo(url, name, text, username):
+def create_photo(url, name, text, user_id):
     """Creates a photo"""
 
-    photo = Photo(url=url, name=name, text=text, username=username)
+    photo = Photo(url=url, name=name, text=text, user_id=user_id)
 
     return photo
 
@@ -47,6 +46,7 @@ def get_all_users():
 def get_all_photos():
     """Returns all photos"""
 
+
     return Photo.query.all()
 
 def get_users_photos(username):
@@ -70,10 +70,10 @@ def get_photo_rating_average(photo_id):
 
     return db.session.query(func.avg(Rating.score)).filter(Rating.photo_id == photo_id).first()[0]
 
-# def get_all_photos_with_ratings():
-#     """Returns all photos with ratings"""
+def get_all_photos_with_ratings():
+    """Returns all photos with ratings"""
 
-#     return db.session.query(func.avg(Rating.score)).filter(Rating.photo_id).all()
+    return db.session.query(Photo).join(Rating, Photo.photo_id == Rating.photo_id(func.avg(Rating.score)).filter(Rating.photo_id)).all()
 
 
 # if __name__ == '__main__':

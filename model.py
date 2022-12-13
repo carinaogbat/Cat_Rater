@@ -15,6 +15,7 @@ class User(db.Model):
     username = db.Column(db.String(10), unique=True)
 
     ratings = db.relationship("Rating", back_populates="user")
+    photos = db.relationship("Photo", back_populates="user")
 
     def __repr__(self):
         return f"<User user_id={self.user_id} username={self.username}>"
@@ -27,16 +28,17 @@ class Photo(db.Model):
 
     photo_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     url = db.Column(db.String)
-    username = db.Column(db.ForeignKey("users.username"))
+    user_id = db.Column(db.ForeignKey("users.user_id"))
     text = db.Column(db.String)
     name = db.Column(db.String(25))
     time_created = db.Column(DateTime(timezone=True), server_default=func.now())
     time_updated = db.Column(DateTime(timezone=True), onupdate=func.now())
 
     ratings = db.relationship("Rating", back_populates="photo")
+    user = db.relationship("User", back_populates="photos")
 
     def __repr__(self):
-        return f"<Photo photo_id={self.photo_id} from username={self.username}>"
+        return f"<Photo photo_id={self.photo_id} from user_id={self.user_id}>"
 
 
 class Rating(db.Model):

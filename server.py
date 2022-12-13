@@ -3,9 +3,9 @@ from model import connect_to_db, db, User, Photo, Rating, connect_to_db
 import cloudinary.uploader
 import os
 import crud
-CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
-CLOUDINARY_SECRET = os.environ["CLOUDINARY_SECRET"]
-CLOUD_NAME = "dkiisulmn"
+# CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
+# CLOUDINARY_SECRET = os.environ["CLOUDINARY_SECRET"]
+# CLOUD_NAME = "dkiisulmn"
 
 from jinja2 import StrictUndefined
 
@@ -19,19 +19,22 @@ app.jinja_env.undefined = StrictUndefined
 def all_photos():
     """View all rated photos."""
 
-    # photos = crud.get_all_photos_with_ratings()
-    # photos = []
-    photos = crud.get_all_photos()
-    # for photo in all_photos:
-    #     photo.ratings = round(crud.get_photo_rating_average(photo.photo_id))
-    #     photos.append(photo)
-    photo_ratings = []
-    for photo in photos:
-        rating = round(crud.get_photo_rating_average(photo.photo_id))
-        photo_ratings.append({photo.photo_id:rating})
-    
 
-    return render_template("homepage.html", photos=photos)
+    photos = crud.get_all_photos()
+    photos_with_ratings = []
+    for photo in photos:
+        rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+        photo_with_rating = {}
+        photo_with_rating['id'] = photo.id
+        photo_with_rating['rating'] = rating
+        photo_with_rating['username'] = photo.user.username
+        photo_with_rating['url'] = photo.url
+        photo_with_rating['text'] = photo.text
+        photo_with_rating['name'] = photo.name
+        photos_with_ratings.append(photo_with_rating)
+
+
+    return render_template("homepage.html", photos=photos, photo_with_rating=photo_with_rating)
 
 @app.route("/login")
 def display_login_page():
