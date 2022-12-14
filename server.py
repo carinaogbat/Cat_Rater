@@ -3,9 +3,9 @@ from model import connect_to_db, db, User, Photo, Rating, connect_to_db
 import cloudinary.uploader
 import os
 import crud
-# CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
-# CLOUDINARY_SECRET = os.environ["CLOUDINARY_SECRET"]
-# CLOUD_NAME = "dkiisulmn"
+CLOUDINARY_KEY = os.environ['CLOUDINARY_KEY']
+CLOUDINARY_SECRET = os.environ["CLOUDINARY_SECRET"]
+CLOUD_NAME = "dkiisulmn"
 
 from jinja2 import StrictUndefined
 
@@ -25,7 +25,7 @@ def all_photos():
     for photo in photos:
         rating = round(crud.get_photo_rating_average(photo.photo_id)) 
         photo_with_rating = {}
-        photo_with_rating['id'] = photo.id
+        photo_with_rating['id'] = photo.photo_id
         photo_with_rating['rating'] = rating
         photo_with_rating['username'] = photo.user.username
         photo_with_rating['url'] = photo.url
@@ -34,7 +34,7 @@ def all_photos():
         photos_with_ratings.append(photo_with_rating)
 
 
-    return render_template("homepage.html", photos=photos, photo_with_rating=photo_with_rating)
+    return render_template("homepage.html", photos_with_ratings=photos_with_ratings)
 
 @app.route("/login")
 def display_login_page():
@@ -167,10 +167,21 @@ def display_user_profile(username):
 
     else:
         user = crud.get_user_by_username(username)
-        photos = crud.get_users_photos(username)
+        photos = crud.get_users_photos(user.user_id)
         ratings = crud.get_users_ratings(user.user_id)
+        photos_with_ratings = []
+        for photo in photos:
+            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
 
-    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
+    return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
 @app.route("/myprofile/<username>", methods=["POST"])
 def show_user_profile(username):
@@ -203,11 +214,23 @@ def show_user(username):
     """Show details on a particular user."""
 
     user = crud.get_user_by_username(username)
-    photos = crud.get_users_photos(username)
+    photos = crud.get_users_photos(user.user_id)
     ratings = crud.get_users_ratings(user.user_id)
+
+    photos_with_ratings = []
+    for photo in photos:
+        rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+        photo_with_rating = {}
+        photo_with_rating['id'] = photo.photo_id
+        photo_with_rating['rating'] = rating
+        photo_with_rating['username'] = photo.user.username
+        photo_with_rating['url'] = photo.url
+        photo_with_rating['text'] = photo.text
+        photo_with_rating['name'] = photo.name
+        photos_with_ratings.append(photo_with_rating)
     
 
-    return render_template("user_details.html", user=user, photos=photos, ratings=ratings)
+    return render_template("user_details.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
 @app.route("/search")
 def search():

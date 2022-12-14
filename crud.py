@@ -49,10 +49,10 @@ def get_all_photos():
 
     return Photo.query.all()
 
-def get_users_photos(username):
+def get_users_photos(user_id):
     """Returns user photos"""
 
-    return Photo.query.filter(Photo.username == username)
+    return Photo.query.filter(Photo.user_id == user_id)
 
 def get_users_ratings(user_id):
     """Returns user ratings"""
