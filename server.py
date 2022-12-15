@@ -233,10 +233,31 @@ def show_user(username):
     return render_template("user_details.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
 @app.route("/search")
-def search():
+def display_search():
     """Searches site by user selected parameters""" 
 
     return render_template("search.html")
+
+@app.route("/search", methods=["POST"])
+
+def search():
+    """Searches for user chosen parameters"""
+
+    username = request.form.get("username")
+    user_email =request.form.get("user-email")
+    pet_name = request.form.get("pet-name")
+
+    if username:
+        user = crud.get_user_by_username(username)
+
+    elif user_email:
+        user = crud.get_user_by_email(user_email)
+
+    elif pet_name:
+        pets = crud.get_photos_by_petname(pet_name)
+
+
+    return redirect("search_results.html", user=user, pets=pets)
 
 
 
