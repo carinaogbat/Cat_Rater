@@ -4,17 +4,18 @@
 {% block body %}
   <h1>Welcome {{user.username}}</h1>
   <h2>Here's your rated pictures</h2>
-  {% for photo in photos_with_ratings %}
-  <div id="all-photos">
+  {% for photo in photos_with_ratings %} -->
+ <div id="all-photos">
     <img src="/{{photo['url']}}" height="256" width="180">
     {{photo['name']}}, rated {{photo['rating']}} out of 10!
   </div>
   {% endfor %}
+
   <h2>Add your next floof to rate below</h2>
   <form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
     <input type="file" name="my-file" id="file">
     <div>
-    Tell us about this photo.
+    Tell us about this photo:
     <input type="text" name="text" id="photo-text">
   </div>
   <div>
@@ -24,7 +25,7 @@
     <input type="submit">
   </form>
 
-  <h3>here's the ratings you've given</h3>
+  <h3>Here's the ratings you've given</h3>
   {% for rating in ratings %}
   <div>
     <img src="/{{rating.photo.url}}" height="256" width="180">

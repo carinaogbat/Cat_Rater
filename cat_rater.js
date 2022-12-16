@@ -2,7 +2,7 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
     const fileInput = {
-        file : document.querySelector('#file').value,
+        file : document.querySelector('file').value,
         text : document.querySelector('#photo-text').value,
         name : document.querySelector('#photo-name').value
     };
