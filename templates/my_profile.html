@@ -5,10 +5,17 @@
   <h1>Welcome {{user.username}}</h1>
   <h2>Here's your rated pictures</h2>
   {% for photo in photos_with_ratings %}
+  {% if (photo['rating'] is number) %}}
  <div id="all-photos">
     <img src="/{{photo['url']}}" height="256" width="180">
     {{photo['name']}}, rated {{photo['rating']}} out of 10!
   </div>
+  {% else %}
+  <div id="unrated-photos">
+    <img src="/{{photo['url']}}" height="256" width="180">
+    {{photo['name']}}, this cat has not been rated yet!
+  </div>
+  {% endif %}
   {% endfor %}
 
   <h2>Add your next floof to rate below</h2>

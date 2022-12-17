@@ -23,15 +23,27 @@ def all_photos():
     photos = crud.get_all_photos()
     photos_with_ratings = []
     for photo in photos:
-        rating = round(crud.get_photo_rating_average(photo.photo_id)) 
-        photo_with_rating = {}
-        photo_with_rating['id'] = photo.photo_id
-        photo_with_rating['rating'] = rating
-        photo_with_rating['username'] = photo.user.username
-        photo_with_rating['url'] = photo.url
-        photo_with_rating['text'] = photo.text
-        photo_with_rating['name'] = photo.name
-        photos_with_ratings.append(photo_with_rating)
+        if crud.get_photo_rating_average(photo.photo_id) == None:
+            rating = "This photo has not been rated yet"
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
+
+        else:
+            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
 
 
     return render_template("homepage.html", photos_with_ratings=photos_with_ratings)
@@ -171,15 +183,27 @@ def display_user_profile(username):
         ratings = crud.get_users_ratings(user.user_id)
         photos_with_ratings = []
         for photo in photos:
-            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
-            photo_with_rating = {}
-            photo_with_rating['id'] = photo.photo_id
-            photo_with_rating['rating'] = rating
-            photo_with_rating['username'] = photo.user.username
-            photo_with_rating['url'] = photo.url
-            photo_with_rating['text'] = photo.text
-            photo_with_rating['name'] = photo.name
-            photos_with_ratings.append(photo_with_rating)
+            if crud.get_photo_rating_average(photo.photo_id) == None:
+                rating = "This photo has not been rated yet"
+                photo_with_rating = {}
+                photo_with_rating['id'] = photo.photo_id
+                photo_with_rating['rating'] = rating
+                photo_with_rating['username'] = photo.user.username
+                photo_with_rating['url'] = photo.url
+                photo_with_rating['text'] = photo.text
+                photo_with_rating['name'] = photo.name
+                photos_with_ratings.append(photo_with_rating)
+
+            else:
+                rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+                photo_with_rating = {}
+                photo_with_rating['id'] = photo.photo_id
+                photo_with_rating['rating'] = rating
+                photo_with_rating['username'] = photo.user.username
+                photo_with_rating['url'] = photo.url
+                photo_with_rating['text'] = photo.text
+                photo_with_rating['name'] = photo.name
+                photos_with_ratings.append(photo_with_rating)
 
     return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
@@ -199,15 +223,27 @@ def show_user_profile(username):
         ratings = crud.get_users_ratings(user.user_id)
         photos_with_ratings = []
         for photo in photos:
-            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
-            photo_with_rating = {}
-            photo_with_rating['id'] = photo.photo_id
-            photo_with_rating['rating'] = rating
-            photo_with_rating['username'] = photo.user.username
-            photo_with_rating['url'] = photo.url
-            photo_with_rating['text'] = photo.text
-            photo_with_rating['name'] = photo.name
-            photos_with_ratings.append(photo_with_rating)
+            if crud.get_photo_rating_average(photo.photo_id) == None:
+                rating = "This photo has not been rated yet"
+                photo_with_rating = {}
+                photo_with_rating['id'] = photo.photo_id
+                photo_with_rating['rating'] = rating
+                photo_with_rating['username'] = photo.user.username
+                photo_with_rating['url'] = photo.url
+                photo_with_rating['text'] = photo.text
+                photo_with_rating['name'] = photo.name
+                photos_with_ratings.append(photo_with_rating)
+
+            else:
+                rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+                photo_with_rating = {}
+                photo_with_rating['id'] = photo.photo_id
+                photo_with_rating['rating'] = rating
+                photo_with_rating['username'] = photo.user.username
+                photo_with_rating['url'] = photo.url
+                photo_with_rating['text'] = photo.text
+                photo_with_rating['name'] = photo.name
+                photos_with_ratings.append(photo_with_rating)
 
     text = request.form.get("text")
     name = request.form.get("name")
@@ -217,7 +253,7 @@ def show_user_profile(username):
     
     new_photo = crud.create_photo(url=img_url, name=name, text=text, user_id=user.user_id)
     db.session.add(new_photo)
-    db.session.commit
+    db.session.commit()
 
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings, photos_with_ratings=photos_with_ratings)
