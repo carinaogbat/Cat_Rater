@@ -195,8 +195,19 @@ def show_user_profile(username):
 
     else:
         user = crud.get_user_by_username(username)
-        photos = crud.get_users_photos(username)
+        photos = crud.get_users_photos(user.user_id)
         ratings = crud.get_users_ratings(user.user_id)
+        photos_with_ratings = []
+        for photo in photos:
+            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
 
     text = request.form.get("text")
     name = request.form.get("name")
@@ -209,7 +220,7 @@ def show_user_profile(username):
     db.session.commit
 
 
-    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings)
+    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings, photos_with_ratings=photos_with_ratings)
 
 @app.route("/users/<username>")
 def show_user(username):
