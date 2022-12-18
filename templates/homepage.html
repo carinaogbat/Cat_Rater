@@ -9,7 +9,7 @@
 
   {% for photo in photos_with_ratings %}
     <div id="all-photos">
-    <img src="/{{photo['url']}}" height="256" width="180">
+    <img src="{{photo['url']}}" height="256" width="180">
         This is {{photo['name']}} Rated {{photo['rating']}} out of 10!
         Submitted By:
       <a href="/users/{{photo['username']}}">{{photo['username']}}</a>
