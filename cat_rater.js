@@ -19,3 +19,21 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
     });
 });
 
+document.querySelector('#search-select').addEventListener('submit', (evt)=>
+{
+    evt.preventDefault();
+    const searchInput = {
+        search : document.querySelector('#search-select').value,
+    };
+    fetch("/search", {
+        method: 'POST',
+        body: JSON.stringify(fileInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        alert(responseJson.status);
+    });
+})
