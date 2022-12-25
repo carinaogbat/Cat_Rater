@@ -1,6 +1,25 @@
 {% extends 'base.html' %}
 {% block title %}Search Results{% endblock %}
 
+
+
 {% block body %}
   <h2>Results</h2>
+  {% if user %}
+  <h2>{{user.username}}</h2>
+  <div>
+    <a href="/users/{{user.username}}">See user details here</a>
+  </div>
+  {% endif %}
+
+  {% if photos_with_ratings %}
+    {% for photo in photos_with_ratings %}
+    <div id="all-photos">
+      <img src="{{photo.url}}" height="256" width="180">
+      This is {{photo.name}} Rated {{photo['rating']}} out of 10!
+      <a href="photos/{{photo['id']}}">Rate this floof here</a>
+      </div>
+  {% endfor %}
+  {% endif %}
+
 {% endblock %}

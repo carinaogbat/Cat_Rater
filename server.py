@@ -294,27 +294,53 @@ def display_search():
 def search():
     """Searches for user chosen parameters"""
 
-    search_by = request.form.get("search")
     search_text = request.form.get("search-text")
+    search_by = request.form.get("search")
+    user = {}
+
+    if search_by == "user-email":
+        user = crud.get_user_by_email(search_text)
+    photos_with_ratings = []
+    photos = crud.get_photos_by_pet_name(search_text)
+    for photo in photos:
+        if crud.get_photo_rating_average(photo.photo_id) == None:
+            rating = "This photo has not been rated yet"
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
+
+        else:
+            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
+
+
     # username = request.form.get("username")
     # user_email =request.form.get("user-email")
     # pet_name = request.form.get("pet-name")
-
     # if username:
     #     user = crud.get_user_by_username(username)
-
     # elif user_email:
     #     user = crud.get_user_by_email(user_email)
-    pet_name = search_text
-    if pet_name:
-        pets = crud.get_photos_by_pet_name(pet_name)
-        print(f'*********{pet_name}******')
-        print(f'*********{pets}******')
-
-
-
-    # return redirect("search_results.html", user=user, pets=pets)
-    return f"search: {search_by}   search text: {search_text}"
+    # pet_name = search_text
+    # if pet_name:
+    #     pets = crud.get_photos_by_pet_name(pet_name)
+    #     print(f'*********{pet_name}******')
+    #     print(f'*********{pets}******')
+    return render_template("search_results.html", photos_with_ratings=photos_with_ratings, user=user)
+    # return f"search: {search_by}   search text: {
+    # search_text}"
 
 
 

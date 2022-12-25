@@ -68,7 +68,7 @@ def get_photo_by_id(photo_id):
 def get_photos_by_pet_name(pet_name):
     """Gets all pets with a name"""
 
-    return Photo.query.filter(Photo.name == pet_name)
+    return Photo.query.filter(Photo.name == pet_name).all()
 
 def get_photo_rating_average(photo_id):
     """Returns a photos average score"""
