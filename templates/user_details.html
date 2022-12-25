@@ -9,7 +9,7 @@
     <div id="all-photos">
     <img src="{{photo.url}}" height="256" width="180">
     This is {{photo.name}} Rated {{photo['rating']}} out of 10!
-    <a href="photos/{{photo['id']}}">Rate this floof here</a>
+    <a href="/photos/{{photo['id']}}">Rate this floof here</a>
     </div>
   {% endfor %}
   <h3>Look at {{user.username}}'s ratings here:</h3>

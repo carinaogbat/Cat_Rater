@@ -142,8 +142,13 @@ def display_photo_details(photo_id):
     """Displays photo details"""
 
     photo = crud.get_photo_by_id(photo_id)
+    photo_average_rating = round(crud.get_photo_rating_average(photo_id))
+    if photo_average_rating == None:
+        rating = "(whoops this kitty has not been rated yet)"
+    else:
+        rating = photo_average_rating
 
-    return render_template("photo_details.html", photo=photo)
+    return render_template("photo_details.html", photo=photo, rating=rating)
 
 
 @app.route("/photos/<photo_id>", methods=["POST"])
@@ -151,27 +156,29 @@ def show_photo(photo_id):
     """Show details on a particular photo."""
 
     photo = crud.get_photo_by_id(photo_id)
-    photo_average_rating = crud.get_photo_rating_average(photo_id)
+    photo_average_rating = round(crud.get_photo_rating_average(photo_id))
+    if photo_average_rating == None:
+        rating_average = "(whoops this kitty has not been rated yet)"
+    else:
+        rating_average = photo_average_rating
     username = session.get("username")
     user_rating = int(request.form.get("rating"))
-    print("*"*35)
+    # print("*"*35)
     photo_username = crud.get_user_by_id(photo.photo_id)
-    print(photo_username)
-    
-
+    # print(photo_username)
     if username is None:
         flash("Sorry, you must be signed in to rate a cat.")
     elif not user_rating:
         flash("Please enter your rating")
     else:
         user = crud.get_user_by_username(username)
-
         rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
         db.session.add(rating)
         db.session.commit()
-        flash(f"You rated this cat a {rating} out of 10!")
+        flash(f"You rated this cat a {rating.score} out of 10!")
+        flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!')
 
-    return render_template("photo_details.html", photo=photo, photo_rating=photo_average_rating, photo_username=photo_username)
+    return render_template("photo_details.html", photo=photo, rating_average=rating_average, photo_username=photo_username)
 
 @app.route("/myprofile/<username>")
 def display_user_profile(username):
