@@ -10,9 +10,10 @@
   <div>
     <a href="/users/{{user.username}}">See user details here</a>
   </div>
-  {% endif %}
 
-  {% if photos_with_ratings %}
+
+
+  {% elif photos_with_ratings %}
     {% for photo in photos_with_ratings %}
     <div id="all-photos">
       <img src="{{photo.url}}" height="256" width="180">
@@ -20,6 +21,10 @@
       <a href="photos/{{photo['id']}}">Rate this floof here</a>
       </div>
   {% endfor %}
+ 
+
+  {% else %}
+  <p>Your search did not return any results, please try again.</p>
   {% endif %}
 
 {% endblock %}
