@@ -144,11 +144,11 @@ def display_photo_details(photo_id):
     photo = crud.get_photo_by_id(photo_id)
     photo_average_rating = round(crud.get_photo_rating_average(photo_id))
     if photo_average_rating == None:
-        rating = "(whoops this kitty has not been rated yet)"
+        photo_rating = "(whoops this kitty has not been rated yet)"
     else:
-        rating = photo_average_rating
+        photo_rating = photo_average_rating
 
-    return render_template("photo_details.html", photo=photo, rating=rating)
+    return render_template("photo_details.html", photo=photo, photo_rating=photo_rating)
 
 
 @app.route("/photos/<photo_id>", methods=["POST"])
@@ -158,19 +158,24 @@ def show_photo(photo_id):
     photo = crud.get_photo_by_id(photo_id)
     photo_average_rating = round(crud.get_photo_rating_average(photo_id))
     if photo_average_rating == None:
-        rating_average = "(whoops this kitty has not been rated yet)"
+        photo_rating = "(whoops this kitty has not been rated yet)"
     else:
-        rating_average = photo_average_rating
+        photo_rating = photo_average_rating
     username = session.get("username")
-    user_rating = int(request.form.get("rating"))
+    if username is None:
+        flash("Sorry, you must be signed in to rate a cat.")
+    rating = request.form.get("rating")
+    if not rating.isdigit():
+        flash("Please enter a number between 1 and 10")
+    else:
+        user_rating = int(rating)
+        if user_rating >10 or user_rating <0:
+            flash("Please enter a number between 1 and 10")
     # print("*"*35)
     photo_username = crud.get_user_by_id(photo.photo_id)
     # print(photo_username)
-    if username is None:
-        flash("Sorry, you must be signed in to rate a cat.")
-    elif not user_rating:
-        flash("Please enter your rating")
-    else:
+
+    if user_rating:
         user = crud.get_user_by_username(username)
         rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
         db.session.add(rating)
@@ -178,7 +183,7 @@ def show_photo(photo_id):
         flash(f"You rated this cat a {rating.score} out of 10!")
         flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!')
 
-    return render_template("photo_details.html", photo=photo, rating_average=rating_average, photo_username=photo_username)
+    return render_template("photo_details.html", photo=photo, photo_rating=photo_rating, photo_username=photo_username)
 
 @app.route("/myprofile/<username>")
 def display_user_profile(username):
@@ -253,10 +258,13 @@ def show_user_profile(username):
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
-
+    print("*"*200)
     text = request.form.get("text")
-    name = request.form.get("name".capitalize())
+    print(text)
+    name = request.form.get("name").capitalize()
+    print(name)
     my_file = request.files["my-file"]
+    print(my_file)
     result = cloudinary.uploader.upload(my_file, api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET, cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
     
@@ -361,6 +369,29 @@ def search():
     return render_template("search_results.html", photos_with_ratings=photos_with_ratings, user=user)
     # return f"search: {search_by}   search text: {
     # search_text}"
+@app.route("/delete")
+def delete():
+    """Route to delete photo"""
+
+    return redirect("my_profile.html")
+
+@app.route("/delete", methods=["POST"])
+def delete_photo():
+    """Deletes photo from database"""
+
+    data = request.get_json()
+    delete = request.json.get("deletePhoto")
+
+    # delete_user_photo = request.json.get("deletePhoto")
+    print("*"*75)
+    print("the value I am printing:")
+    print(data)
+    print(delete)
+    # print(delete_user_photo)
+    print("*"*75)
+
+    return redirect("my_profile.html")
+
 
 
 

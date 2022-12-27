@@ -19,15 +19,34 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
     });
 });
 
-document.querySelector('#search-select').addEventListener('submit', (evt)=>
+
+// document.querySelector('#search-select').addEventListener('submit', (evt)=>
+// {
+//     evt.preventDefault();
+//     const searchInput = {
+//         search : document.querySelector('#search-select').value,
+//     };
+//     fetch("/search", {
+//         method: 'POST',
+//         body: JSON.stringify(fileInput),
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     })
+//     .then((response) => response.json())
+//     .then((responseJson) => {
+//         alert(responseJson.status);
+//     });
+// })
+
+document.querySelector('#delete-photo').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
-    const searchInput = {
-        search : document.querySelector('#search-select').value,
-    };
-    fetch("/search", {
+    const deletePhoto = "true";
+     
+    fetch("/delete", {
         method: 'POST',
-        body: JSON.stringify(fileInput),
+        body: JSON.stringify(deletePhoto),
         headers: {
             'Content-Type': 'application/json',
         },
@@ -36,4 +55,4 @@ document.querySelector('#search-select').addEventListener('submit', (evt)=>
     .then((responseJson) => {
         alert(responseJson.status);
     });
-})
+});

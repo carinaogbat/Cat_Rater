@@ -1,5 +1,5 @@
 from model import db, User, Photo, Rating, connect_to_db
-from sqlalchemy import func
+from sqlalchemy import func, delete
 
 
 def create_user(email, password, username):
