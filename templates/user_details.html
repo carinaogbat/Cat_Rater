@@ -3,6 +3,10 @@
 
 {% block body %}
   <h1>Welcome {{user.username}}'s cat rating page!</h1>
+  <h2>Follow {{user.username}}</h2>
+  <form id="follow" action="/users/<username>">
+    <button type="submit">Follow</button>
+  </form>
 
   <h3> Here are all {{user.username}}'s cat submissions</h3>
   {% for photo in photos_with_ratings %}

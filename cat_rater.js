@@ -42,7 +42,9 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 document.querySelector('#delete-photo').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
-    const deletePhoto = "true";
+    const deletePhoto = {
+        "delete" : "true"
+    }
      
     fetch("/delete", {
         method: 'POST',

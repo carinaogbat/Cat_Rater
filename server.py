@@ -13,13 +13,10 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
-
-
 @app.route("/")
 def all_photos():
     """View all rated photos."""
-
-
+    
     photos = crud.get_all_photos()
     photos_with_ratings = []
     for photo in photos:
@@ -258,13 +255,11 @@ def show_user_profile(username):
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
-    print("*"*200)
+
     text = request.form.get("text")
-    print(text)
     name = request.form.get("name").capitalize()
-    print(name)
     my_file = request.files["my-file"]
-    print(my_file)
+
     result = cloudinary.uploader.upload(my_file, api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET, cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
     
@@ -282,6 +277,8 @@ def show_user(username):
     user = crud.get_user_by_username(username)
     photos = crud.get_users_photos(user.user_id)
     ratings = crud.get_users_ratings(user.user_id)
+    follow = request.args.get("follow")
+    print(follow)
 
     photos_with_ratings = []
     for photo in photos:
@@ -309,6 +306,7 @@ def show_user(username):
     
 
     return render_template("user_details.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
+
 
 @app.route("/search")
 def display_search():
@@ -369,23 +367,24 @@ def search():
     return render_template("search_results.html", photos_with_ratings=photos_with_ratings, user=user)
     # return f"search: {search_by}   search text: {
     # search_text}"
+
+
 @app.route("/delete")
 def delete():
     """Route to delete photo"""
 
-    return redirect("my_profile.html")
+    return render_template("my_profile.html")
 
 @app.route("/delete", methods=["POST"])
 def delete_photo():
     """Deletes photo from database"""
 
-    data = request.get_json()
-    delete = request.json.get("deletePhoto")
+
+    delete = request.json.get("delete")
 
     # delete_user_photo = request.json.get("deletePhoto")
     print("*"*75)
     print("the value I am printing:")
-    print(data)
     print(delete)
     # print(delete_user_photo)
     print("*"*75)

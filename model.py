@@ -57,6 +57,21 @@ class Rating(db.Model):
     def __repr__(self):
         return f"<Rating rating_id={self.rating_id} score={self.score}>"
 
+# class Follow(db.Model):
+#     """Follow a user"""
+
+#     __tablename__ = "followings"
+
+#     follow_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+#     id_of_user_followed = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+#     id_of_follower = db.Column(db.Integer, db.ForeignKey("users.user_id"))
+
+#     user_followed = db.relationship("User", foreign_keys=[id_of_user_followed], back_populates="users")
+#     user_following = db.relationship("User", foreign_keys=[id_of_follower], back_populates="users")
+
+#     def __repr__(self):
+#         return f"<Following id={self.follow_id} following user_id{self.id_of_user_followed} being followed by {self.id_of_follower}>"
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///cat_rater", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri

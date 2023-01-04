@@ -4,46 +4,109 @@
 {% block body %}
   <h1>Welcome {{user.username}}</h1>
   <h2>Here's your pictures</h2>
+  <div class="container">
+
   {% for photo in photos_with_ratings %}
-  {% if (photo['rating'] is number) %}}
- <div id="all-photos">
-    <img src="{{photo['url']}}" height="256" width="180">
+
+  <div class="row row-cols-4">
+    <div class="col thumb">
+  {% if (photo['rating'] is number) %}
+
+    <img src="{{photo['url']}}" height="256" width="180"/>
     {{photo['name']}}, rated {{photo['rating']}} out of 10!
-    <form id="delete-photo" action="/delete" method="post">
+    <form id="delete-photo-{{photo['id']}}" action="/delete" method="post">
       <button type="submit">Delete Photo</button>
     </form>
-  </div>
+
+ 
   {% else %}
-  <div id="unrated-photos">
-    <img src="{{photo['url']}}" height="256" width="180">
+
+
+    <img src="{{photo['url']}}" height="256" width="180"/>
     {{photo['name']}}, this cat has not been rated yet!
-    <form id="delete-photo" action="/delete" method="post">
+    <form id="delete-photo{{photo['id']}}" action="/delete" method="post">
       <button type="submit">Delete Photo</button>
     </form>
-  </div>
+
   {% endif %}
   {% endfor %}
+  </div>
+  </div>
 
-  <h2>Add your next floof to rate below</h2>
-  <form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
-    <input type="file" name="my-file" id="file">
-    <div>
-    Tell us about this photo:
-    <input type="text" name="text" id="photo-text">
-  </div>
-  <div>
-    What is your pet's name?
-    <input type="text" name="name" id="photo-name">
-  </div>
-    <input type="submit">
-  </form>
 
-  <h3>Here's the ratings you've given</h3>
-  {% for rating in ratings %}
-  <div>
-    <img src="{{rating.photo.url}}" height="256" width="180">
-    {{rating.photo.name}} Scored {{rating.score}} out of 10!
+
+
+
+<!-- Carousel wrapper -->
+<div
+  id="carouselMultiItemExample"
+  class="carousel slide carousel-dark text-center"
+  data-mdb-ride="carousel"
+>
+  <!-- Controls -->
+  <div class="d-flex justify-content-center mb-4">
+    <button
+      class="carousel-control-prev position-relative"
+      type="button"
+      data-mdb-target="#carouselMultiItemExample"
+      data-mdb-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next position-relative"
+      type="button"
+      data-mdb-target="#carouselMultiItemExample"
+      data-mdb-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
-  {% endfor %}
+  <!-- Inner -->
+
+    <!-- Single item -->
+    {% for rating in ratings %}
+    <div class="carousel-inner py-4">
+      
+      {{rating.photo.name}} Scored {{rating.score}} out of 10!
+    </div>
+    <div class="carousel-item active">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="card">
+              <img src="{{rating.photo.url}}" height="256" width="180"/>
+              <div class="card-body">
+                <h5 class="card-title">{{rating.photo.name}}</h5>
+                <p class="card-text">
+                   Scored {{rating.score}} out of 10!
+                </p>
+
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+</div>
+
+<div class="row row-cols-4">
+  <div class="col-3">
+<h2>Add your next floof to rate below</h2>
+<form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
+<input type="file" name="my-file" id="file">
+<div>
+Tell us about this photo:
+<input type="text" name="text" id="photo-text">
+</div>
+<div>
+What is your pet's name?
+<input type="text" name="name" id="photo-name">
+</div>
+<input type="submit">
+</form>
+</div>
+</div>
   <script src="cat_rater.js"></script>
 {% endblock %}

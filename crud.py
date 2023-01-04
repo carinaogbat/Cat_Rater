@@ -23,6 +23,13 @@ def create_rating(user, photo, score):
 
     return rating
 
+# def create_follow(user_followed, user_following):
+#     """Creates a following"""
+
+#     follow = Follow(id_of_user_followed=user_followed, id_of_follower=user_following)
+
+#     return follow
+
 def get_user_by_id(user_id):
     """Returns a user by ID"""
 
