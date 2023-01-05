@@ -43,9 +43,10 @@ document.querySelector('#delete-photo').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
     const deletePhoto = {
-        "delete" : "true"
-    }
-     
+    
+        deletePhotoId : document.querySelector('#photo-id').value,
+
+    };
     fetch("/delete", {
         method: 'POST',
         body: JSON.stringify(deletePhoto),

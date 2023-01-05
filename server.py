@@ -166,7 +166,7 @@ def show_photo(photo_id):
         flash("Please enter a number between 1 and 10")
     else:
         user_rating = int(rating)
-        if user_rating >10 or user_rating <0:
+        if user_rating > 10 or user_rating <0:
             flash("Please enter a number between 1 and 10")
     # print("*"*35)
     photo_username = crud.get_user_by_id(photo.photo_id)
@@ -376,20 +376,51 @@ def delete():
     return render_template("my_profile.html")
 
 @app.route("/delete", methods=["POST"])
-def delete_photo():
-    """Deletes photo from database"""
+def display():
+    username = session.get("username")
+    if username is None:
+        flash("Please sign in to see your profile page")
+        return redirect("/login")
+    else:
+        user = crud.get_user_by_username(username)
+        photos = crud.get_users_photos(user.user_id)
+        ratings = crud.get_users_ratings(user.user_id)
+        photos_with_ratings = []
+    for photo in photos:
+        if crud.get_photo_rating_average(photo.photo_id) == None:
+            rating = "(whoops this kitty has not been rated yet)"
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
+
+        else:
+            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
 
 
-    delete = request.json.get("delete")
+    delete = request.form.get("photo-id")
+        # delete_user_photo = request.json.get("deletePhoto")
+    # print("*"*75)
+    # print("the value I am printing:")
+    # print(delete)
+    # # print(delete_user_photo)
+    # print("*"*75)
 
-    # delete_user_photo = request.json.get("deletePhoto")
-    print("*"*75)
-    print("the value I am printing:")
-    print(delete)
-    # print(delete_user_photo)
-    print("*"*75)
+    return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
-    return redirect("my_profile.html")
+
 
 
 
