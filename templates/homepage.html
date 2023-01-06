@@ -8,9 +8,11 @@
   <h3>To rate floofs <a href="login">log in</a> or <a href="/signup">sign up</a></h3>
 
 
-
+<div class="container">
+  <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
   {% for photo in photos_with_ratings %}
-  <div class="card" style="width: 18rem;">
+  <div class="col">
+  <div class="card">
     <img src="{{photo['url']}}" class="card-img-top">
     <div class="card-body">
       <h5 class="card-title">{{photo['name']}}</h5>
@@ -19,10 +21,13 @@
     <div class="card-body">
       <p class="card-body">Submitted by:</p>
       <a href="/users/{{photo['username']}}" class="card-link">{{photo['username']}}</a>
-
+    </div>
     </div>
   </div>
 
+
   {% endfor %}
+</div>
+</div>
   <script src="cat_rater.js"></script>
 {% endblock %}
