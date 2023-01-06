@@ -87,6 +87,11 @@ def get_all_photos_with_ratings():
 
     return db.session.query(Photo).join(Rating, Photo.photo_id == Rating.photo_id(func.avg(Rating.score)).filter(Rating.photo_id)).all()
 
+def delete_photo_by_id(photo_id):
+    """Deletes a photo with a given ID"""
+
+    return db.session.query(Photo).filter_by(id=photo_id).delete()
+
 
 # if __name__ == '__main__':
 #     from server import app

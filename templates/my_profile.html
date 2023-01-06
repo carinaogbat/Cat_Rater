@@ -12,7 +12,7 @@
     <div class="col-lg-3 col-md-4 col-xs-6 thumb">
   {% if (photo['rating'] is number) %}
 
-    <img src="{{photo['url']}}" height="256" width="180"/>
+    <img src="{{photo['url']}}" class="img-fluid img-thumbnail" height="256" width="180"/>
     {{photo['name']}}, rated {{photo['rating']}} out of 10! 
     <form id="delete-photo" action="/delete" method="post">
       <input type="hidden" id="photo-id" name="photo-id" value="{{photo['id']}}">
