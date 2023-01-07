@@ -410,17 +410,14 @@ def display():
 
 
     delete = request.form.get("photo-id")
-        # delete_user_photo = request.json.get("deletePhoto")
+    crud.delete_photo_by_id(delete)
+    db.session.commit()
     # print("*"*75)
     # print("the value I am printing:")
     # print(delete)
-    # # print(delete_user_photo)
-    # print("*"*75)
+
 
     return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
-
-
-
 
 
 
