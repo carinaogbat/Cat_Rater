@@ -11,6 +11,24 @@
     <a href="/users/{{user.username}}">See user details here</a>
   </div>
 
+  {% elif photos_with_ratings %}
+  <div class="container">
+    <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
+    {% for photo in photos_with_ratings %}
+    <div class="col">
+    <div class="card">
+      <img src="{{photo.url}}" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{photo.name}}</h5>
+        <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
+      </div>
+      <div class="card-body">
+        <p class="card-body">Rate this floof here:</p>
+        <a href="photos/{{photo['id']}}" class="card-link">here</a>
+      </div>
+      </div>
+    </div>
+    {% endfor %}
 
 
   {% elif photos_with_ratings %}
