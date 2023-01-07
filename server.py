@@ -51,7 +51,7 @@ def display_login_page():
 
     user_in_session = session.get("username")
     if user_in_session:
-        flash("You are already signed in")
+        flash("You are already signed in", category="error")
         return redirect("/myprofile/<username>")
     else:
 
@@ -68,11 +68,11 @@ def login():
     user = crud.get_user_by_email(email)
 
     if not user or user.password != password:
-        flash("Error: the email or password you entered was incorrect")
+        flash("Error: the email or password you entered was incorrect", category="error")
         return redirect("/login")
     else:
         session["username"] = user.username
-        flash(f"Welcome back {user.username}")
+        flash(f"Welcome back {user.username}", category="message")
 
         return redirect("/myprofile/<username>")
 
@@ -89,9 +89,9 @@ def logout():
     user_in_session=session.get("username")
     if user_in_session:
         session["username"] = None
-        flash("You have been signed out")
+        flash("You have been signed out", category="message")
     else:
-        flash("Error, you are not signed in")
+        flash("Error, you are not signed in", category="error")
 
     return redirect("/")
 
@@ -101,7 +101,7 @@ def display_signup():
 
     user = session.get("username")
     if user:
-        flash("You are already signed in")
+        flash("You are already signed in", category="message")
         return redirect("/myprofile/<username>")
     else:
 
@@ -118,13 +118,13 @@ def sign_up():
     user = crud.get_user_by_email(email)
 
     if user:
-        flash("Error, there is already an account with this email, please try again")
+        flash("Error, there is already an account with this email, please try again", category="error")
         return redirect("/myprofile/<username>")
     else:
         user = crud.create_user(username=username, email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        flash("Account created")
+        flash("Account created", category="message")
 
     return redirect("/myprofile/<username>")
 
@@ -161,25 +161,25 @@ def show_photo(photo_id):
         photo_rating = photo_average_rating
     username = session.get("username")
     if username is None:
-        flash("Sorry, you must be signed in to rate a cat.")
+        flash("You must be signed in to rate a cat.", category="message")
 
     rating = request.form.get("rating")
     if not rating.isdigit():
-        flash("Please enter a number between 1 and 10")
+        flash("Please enter a number between 1 and 10", category="message")
     else:
         user_rating = int(rating)
     # print("*"*35)
     photo_username = crud.get_user_by_id(photo.photo_id)
     # print(photo_username)
     if user_rating > 10 or user_rating < 0:
-        flash("Please enter a number between 1 and 10")
+        flash("Please enter a number between 1 and 10", category="message")
     elif user_rating:
         user = crud.get_user_by_username(username)
         rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
         db.session.add(rating)
         db.session.commit()
-        flash(f"You rated this cat a {rating.score} out of 10!")
-        flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!')
+        flash(f"You rated this cat a {rating.score} out of 10!", category="message")
+        flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!', category="message")
 
     return render_template("photo_details.html", photo=photo, photo_rating=photo_rating, photo_username=photo_username)
 
@@ -188,7 +188,7 @@ def display_user_profile(username):
     """Show your profile page"""
     username = session.get("username")
     if username is None:
-        flash("Please sign in to see your profile page")
+        flash("Please sign in to see your profile page", category="message")
         return redirect("/login")
 
     else:
@@ -226,7 +226,7 @@ def show_user_profile(username):
     """Show your profile page"""
     username = session.get("username")
     if username is None:
-        flash("Please sign in to see your profile page")
+        flash("Please sign in to see your profile page", category="message")
         return redirect("/login")
 
     else:

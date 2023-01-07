@@ -19,12 +19,12 @@
         <a href="/photos/{{photo['id']}}" class="card-link">Rate this floof here</a>
       </div>
       </div>
-    </div>
+
+
     {% endfor %}
 
-    
+
     <h3>You can view {{user.username}}'s ratings here:</h3>
-    <div class="container">
       <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
   {% for rating in ratings %}
   <div class="col">
@@ -35,7 +35,14 @@
         <p class="card-text">Scored {{rating.score}} out of 10!</p>
       </div>
       </div>
+      </div>
+      </div>
+
+
+
+
     </div>
+
   {% endfor %}
 
 
