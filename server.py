@@ -139,10 +139,10 @@ def display_photo_details(photo_id):
     """Displays photo details"""
 
     photo = crud.get_photo_by_id(photo_id)
-    photo_average_rating = round(crud.get_photo_rating_average(photo_id))
-    if photo_average_rating == None:
+    if crud.get_photo_rating_average(photo.photo_id) == None:
         photo_rating = "(whoops this kitty has not been rated yet)"
     else:
+        photo_average_rating = round(crud.get_photo_rating_average(photo_id))
         photo_rating = photo_average_rating
 
     return render_template("photo_details.html", photo=photo, photo_rating=photo_rating)
@@ -153,10 +153,11 @@ def show_photo(photo_id):
     """Show details on a particular photo."""
 
     photo = crud.get_photo_by_id(photo_id)
-    photo_average_rating = round(crud.get_photo_rating_average(photo_id))
-    if photo_average_rating == None:
+
+    if crud.get_photo_rating_average(photo.photo_id) == None:
         photo_rating = "(whoops this kitty has not been rated yet)"
     else:
+        photo_average_rating = round(crud.get_photo_rating_average(photo_id))
         photo_rating = photo_average_rating
     username = session.get("username")
     if username is None:
