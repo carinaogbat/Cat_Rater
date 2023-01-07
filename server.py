@@ -161,18 +161,18 @@ def show_photo(photo_id):
     username = session.get("username")
     if username is None:
         flash("Sorry, you must be signed in to rate a cat.")
+
     rating = request.form.get("rating")
     if not rating.isdigit():
         flash("Please enter a number between 1 and 10")
     else:
         user_rating = int(rating)
-        if user_rating > 10 or user_rating <0:
-            flash("Please enter a number between 1 and 10")
     # print("*"*35)
     photo_username = crud.get_user_by_id(photo.photo_id)
     # print(photo_username)
-
-    if user_rating:
+    if user_rating > 10 or user_rating < 0:
+        flash("Please enter a number between 1 and 10")
+    elif user_rating:
         user = crud.get_user_by_username(username)
         rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
         db.session.add(rating)
@@ -415,7 +415,6 @@ def display():
     # print("*"*75)
     # print("the value I am printing:")
     # print(delete)
-
 
     return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
