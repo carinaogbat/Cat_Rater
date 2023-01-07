@@ -277,8 +277,7 @@ def show_user(username):
     user = crud.get_user_by_username(username)
     photos = crud.get_users_photos(user.user_id)
     ratings = crud.get_users_ratings(user.user_id)
-    follow = request.args.get("follow")
-    print(follow)
+
 
     photos_with_ratings = []
     for photo in photos:
@@ -305,7 +304,7 @@ def show_user(username):
             photos_with_ratings.append(photo_with_rating)
     
 
-    return render_template("user_details.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
+    return render_template("user_details.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings, photos=photos)
 
 
 @app.route("/search")

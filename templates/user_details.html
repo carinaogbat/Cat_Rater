@@ -3,26 +3,41 @@
 
 {% block body %}
   <h1>Welcome {{user.username}}'s cat rating page!</h1>
-  <h2>Follow {{user.username}}</h2>
-  <form id="follow" action="/users/<username>">
-    <button type="submit">Follow</button>
-  </form>
-
+ 
   <h3> Here are all {{user.username}}'s cat submissions</h3>
-  {% for photo in photos_with_ratings %}
-    <div id="all-photos">
-    <img src="{{photo.url}}" height="256" width="180">
-    This is {{photo.name}} Rated {{photo['rating']}} out of 10!
-    <a href="/photos/{{photo['id']}}">Rate this floof here</a>
+  <div class="container">
+    <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
+    {% for photo in photos_with_ratings %}
+    <div class="col">
+    <div class="card">
+      <img src="{{photo['url']}}" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{photo['name']}}</h5>
+        <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
+      </div>
+      <div class="card-body">
+        <a href="/photos/{{photo['id']}}" class="card-link">Rate this floof here</a>
+      </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    <h3>You can view {{user.username}}'s ratings here:</h3>
+    <div class="container">
+      <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
+  {% for rating in ratings %}
+  <div class="col">
+    <div class="card">
+      <img src="{{rating.photo.url}}" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{rating.photo.name}}</h5>
+        <p class="card-text">Scored {{rating.score}} out of 10!</p>
+      </div>
+      </div>
     </div>
   {% endfor %}
-  <h3>Look at {{user.username}}'s ratings here:</h3>
-  {% for rating in ratings %}
-  <div>
-    <img src="{{rating.photo.url}}" height="256" width="180">
-    Scored {{rating.score}} out of 10.
-  </div>
-  {% endfor %}
+
+
 
   <script src="cat_rater.js"></script>
 
