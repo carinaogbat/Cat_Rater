@@ -2,6 +2,25 @@
 {% block title %} My Profile: {{user.username}} {% endblock %}
 
 {% block body %}
+<h1>Welcome {{user.username}}</h1> 
+
+
+<div class="container">
+    <h3>Add your next floof submission</h3>
+      <form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+          <input type="file" name="my-file" id="file">
+          <br>
+          Tell us about this photo:
+          <input type="text" name="text" id="photo-text">
+          <br>
+          What is your pet's name?
+          <input type="text" name="name" id="photo-name">
+          <input type="submit">
+      </div>
+          </form>
+
+  </div>
 
 
 <div class="container">
@@ -45,5 +64,11 @@
         {% endfor %}
 
 
-        <script src="cat_rater.js"></script>
-        {% endblock %}
+
+
+    
+
+
+    <script src="cat_rater.js"></script>
+    {% endblock %}
+
