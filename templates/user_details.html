@@ -2,51 +2,47 @@
 {% block title %}View User Profile{% endblock %}
 
 {% block body %}
-  <h1>Welcome {{user.username}}'s cat rating page!</h1>
+  <h1>{{user.username}}'s cat rating page!</h1>
+  <br>
  
-  <h3> Here are all {{user.username}}'s cat submissions</h3>
+  <h3> {{user.username}}'s cats:</h3>
   <div class="container">
     <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
-    {% for photo in photos_with_ratings %}
-    <div class="col">
-    <div class="card">
-      <img src="{{photo['url']}}" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">{{photo['name']}}</h5>
-        <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
+      {% for photo in photos_with_ratings %}
+      <div class="col">
+        <div class="card">
+          <img src="{{photo['url']}}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{photo['name']}}</h5>
+              <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
+            </div>
+            <div class="card-body">
+            <a href="/photos/{{photo['id']}}" class="card-link">Rate this floof here</a>
+            </div>
+        </div>
       </div>
-      <div class="card-body">
-        <a href="/photos/{{photo['id']}}" class="card-link">Rate this floof here</a>
-      </div>
-      </div>
+      {% endfor %}
+    </div>
+  </div>
 
+  <h3>{{user.username}}'s ratings:</h3>
+  <br>
+  <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
 
-    {% endfor %}
-
-
-    <h3>You can view {{user.username}}'s ratings here:</h3>
-      <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
   {% for rating in ratings %}
   <div class="col">
     <div class="card">
       <img src="{{rating.photo.url}}" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">{{rating.photo.name}}</h5>
-        <p class="card-text">Scored {{rating.score}} out of 10!</p>
-      </div>
-      </div>
-      </div>
-      </div>
-
-
-
-
+        <div class="card-body">
+          <h5 class="card-title">{{rating.photo.name}}</h5>
+          <p class="card-text">Scored {{rating.score}} out of 10!</p>
+        </div>
     </div>
-
-  {% endfor %}
-
+    </div>
+    {% endfor %}
+  </div>
+  
 
 
   <script src="cat_rater.js"></script>
-
 {% endblock %}
