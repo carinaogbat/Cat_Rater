@@ -14,20 +14,26 @@
         <p class="card-text">Rated {{photo_rating}} out of 10!</p>
       </div>
       <div class="card-body">
+        <div class="card-body">
+
       </div>
       </div>
     </div>
   
 
   <div class="container">
-  <h3>Rate Photo:</h3>
-  <p>Ready to rate this cat?</p>
-  <form action="/photos/{{ photo.photo_id }}" method="POST">
-    Enter a number between 1 and 10 <input type="text" name="rating">
-    <p>
-    <input type="submit">
-  </p>
-  </form>
+    <h3>Rate Photo:</h3>
+      <br>
+    <p>Ready to rate this cat?</p>
+      <br>
+    <div class="wrap-form">
+    <form action="/photos/{{ photo.photo_id }}" method="POST">
+      Enter a number between 1 and 10 <input type="text" name="rating">
+      <p>
+      <input type="submit">
+      </p>
+    </form>
+    </div>
 </div>
   
   

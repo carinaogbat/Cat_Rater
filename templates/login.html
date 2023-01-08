@@ -3,12 +3,16 @@
 
 {% block body %}
   <h1>Welcome to the cat rater!</h1>
-  <h2>Where you rate the most boopable floofs!</h2>
+  <br>
+  <h2>Where you get to rate <u>the most boopable floofs!</u></h2>
+  <br>
  <h3> Log In Below:</h3>
- <form action="/login" method="POST">
-  <p>
+ <br>
+ <div class-"wrap-form">
+  <form action="/login" method="POST">
+    <p>
     Email <input type="text" name="email">
-  </p>
+    </p>
   <p>
     Password <input type="text" name="password">
   </p>
@@ -16,5 +20,6 @@
     <input type="submit">
   </p>
  </form>
+</div>
 
 {% endblock %}
