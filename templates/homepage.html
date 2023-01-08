@@ -16,8 +16,13 @@
     <img src="{{photo['url']}}" class="card-img-top">
     <div class="card-body">
       <h5 class="card-title">{{photo['name']}}</h5>
+      {% if (photo['rating'] is number) %}
       <p class="card-text">Rated {{photo['rating']}} out of 10! Submitted by: <a href="/users/{{photo['username']}}" class="card-link">{{photo['username']}}</a></p>
-    </div>
+      </div>
+      {% else %}
+      <p class="card-text">This kitty has not been rated yet. Submitted by: <a href="/users/{{photo['username']}}" class="card-link">{{photo['username']}}</a></p>
+      </div>
+      {% endif %}
     <div class="card-body">
       <a href="/photos/{{photo['id']}}" class="card-link">Rate {{photo['name']}}</a>
 
