@@ -1,0 +1,33 @@
+body {
+    color: #5A838F;
+    background-color: #C2D4D9;
+}
+
+card {
+    background-color: #C2D4D9;
+
+}
+
+.card-text {
+    color: #8F7A67
+}
+
+.card-title {
+    color: #25838F
+}
+
+.card-body {
+    background-color: #F2FCFF
+}
+
+.message{
+    color: black
+}
+
+.alert{
+    color: red
+}
+
+a {
+    color:darkcyan
+}
