@@ -31,7 +31,6 @@ def all_photos():
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
-
         else:
             rating = round(crud.get_photo_rating_average(photo.photo_id)) 
             photo_with_rating = {}
@@ -42,7 +41,6 @@ def all_photos():
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
-
 
     return render_template("homepage.html", photos_with_ratings=photos_with_ratings)
 
@@ -55,7 +53,6 @@ def display_login_page():
         flash("You are already signed in", category="error")
         return redirect("/myprofile/<username>")
     else:
-
         return render_template("login.html")
 
 @app.route("/login", methods=["POST"])
@@ -65,7 +62,6 @@ def login():
     email = request.form.get("email")
     password = request.form.get("password")
     username = request.form.get("username")
-
     user = crud.get_user_by_email(email)
 
     if not user or user.password != password:
@@ -115,7 +111,6 @@ def sign_up():
     email = request.form.get("email".lower())
     password = request.form.get("password")
     username = request.form.get("username".lower())
-
     user = crud.get_user_by_email(email)
 
     if user:
@@ -128,12 +123,6 @@ def sign_up():
         flash("Account created", category="message")
 
     return redirect("/myprofile/<username>")
-
-# @app.route("/photos/<photo_id>")
-# def photo_details():
-#     """Show details of photo"""
-
-#     return render_template("photo_details.html")
 
 @app.route("/photos/<photo_id>")
 def display_photo_details(photo_id):
@@ -169,9 +158,9 @@ def show_photo(photo_id):
         flash("Please enter a number between 1 and 10", category="message")
     else:
         user_rating = int(rating)
-    # print("*"*35)
+
     photo_username = crud.get_user_by_id(photo.photo_id)
-    # print(photo_username)
+
     if user_rating > 10 or user_rating < 0:
         flash("Please enter a number between 1 and 10", category="message")
     elif user_rating:
@@ -191,7 +180,6 @@ def display_user_profile(username):
     if username is None:
         flash("Please sign in to see your profile page", category="message")
         return redirect("/login")
-
     else:
         user = crud.get_user_by_username(username)
         photos = crud.get_users_photos(user.user_id)
@@ -207,8 +195,8 @@ def display_user_profile(username):
             photo_with_rating['url'] = photo.url
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
+            photo_with_rating['time_created'] = photo.time_created
             photos_with_ratings.append(photo_with_rating)
-
         else:
             rating = round(crud.get_photo_rating_average(photo.photo_id)) 
             photo_with_rating = {}
@@ -218,8 +206,10 @@ def display_user_profile(username):
             photo_with_rating['url'] = photo.url
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
+            photo_with_rating['time_created'] = photo.time_created
             photos_with_ratings.append(photo_with_rating)
 
+            
     return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings, username=username)
 
 @app.route("/myprofile/<username>", methods=["POST"])
@@ -229,7 +219,6 @@ def show_user_profile(username):
     if username is None:
         flash("Please sign in to see your profile page", category="message")
         return redirect("/login")
-
     else:
         user = crud.get_user_by_username(username)
         photos = crud.get_users_photos(user.user_id)
@@ -245,8 +234,8 @@ def show_user_profile(username):
             photo_with_rating['url'] = photo.url
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
+            photo_with_rating['time_created'] = photo.time_created
             photos_with_ratings.append(photo_with_rating)
-
         else:
             rating = round(crud.get_photo_rating_average(photo.photo_id)) 
             photo_with_rating = {}
@@ -256,19 +245,18 @@ def show_user_profile(username):
             photo_with_rating['url'] = photo.url
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
+            photo_with_rating['time_created'] = photo.time_created
             photos_with_ratings.append(photo_with_rating)
 
     text = request.form.get("text")
     name = request.form.get("name").capitalize()
     my_file = request.files["my-file"]
-
     result = cloudinary.uploader.upload(my_file, api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET, cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
     
     new_photo = crud.create_photo(url=img_url, name=name, text=text, user_id=user.user_id)
     db.session.add(new_photo)
     db.session.commit()
-
 
     return render_template("my_profile.html", user=user, photos=photos, ratings=ratings, photos_with_ratings=photos_with_ratings, username=username)
 
@@ -279,7 +267,6 @@ def show_user(username):
     user = crud.get_user_by_username(username)
     photos = crud.get_users_photos(user.user_id)
     ratings = crud.get_users_ratings(user.user_id)
-
 
     photos_with_ratings = []
     for photo in photos:
@@ -293,7 +280,6 @@ def show_user(username):
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
-
         else:
             rating = round(crud.get_photo_rating_average(photo.photo_id)) 
             photo_with_rating = {}
@@ -305,7 +291,6 @@ def show_user(username):
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
     
-
     return render_template("user_details.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings, photos=photos)
 
 
@@ -341,7 +326,6 @@ def search():
                 photo_with_rating['text'] = photo.text
                 photo_with_rating['name'] = photo.name
                 photos_with_ratings.append(photo_with_rating)
-
             else:
                 rating = round(crud.get_photo_rating_average(photo.photo_id)) 
                 photo_with_rating = {}
@@ -353,22 +337,8 @@ def search():
                 photo_with_rating['name'] = photo.name
                 photos_with_ratings.append(photo_with_rating)
 
-
-    # username = request.form.get("username")
-    # user_email =request.form.get("user-email")
-    # pet_name = request.form.get("pet-name")
-    # if username:
-    #     user = crud.get_user_by_username(username)
-    # elif user_email:
-    #     user = crud.get_user_by_email(user_email)
-    # pet_name = search_text
-    # if pet_name:
-    #     pets = crud.get_photos_by_pet_name(pet_name)
-    #     print(f'*********{pet_name}******')
-    #     print(f'*********{pets}******')
     return render_template("search_results.html", photos_with_ratings=photos_with_ratings, user=user)
-    # return f"search: {search_by}   search text: {
-    # search_text}"
+
 
 
 @app.route("/delete")
@@ -399,7 +369,6 @@ def display():
             photo_with_rating['text'] = photo.text
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
-
         else:
             rating = round(crud.get_photo_rating_average(photo.photo_id)) 
             photo_with_rating = {}
@@ -411,13 +380,9 @@ def display():
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
 
-
     delete = request.form.get("photo-id")
     crud.delete_photo_by_id(delete)
     db.session.commit()
-    # print("*"*75)
-    # print("the value I am printing:")
-    # print(delete)
 
     return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
