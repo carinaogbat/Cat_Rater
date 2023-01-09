@@ -7,16 +7,20 @@
 
 <div class="container">
   <div style="text-align:right">
-    <h3>Add your next floof submission</h3>
+    <h4>Add your next floof submission</h4>
       <form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
           <div class="form-group">
             <input type="file" name="my-file" id="file">
             <br>
+            <br>
             Tell us about this photo:
             <input type="text" name="text" id="photo-text">
             <br>
+            <br>
             What is your pet's name?
             <input type="text" name="name" id="photo-name">
+            <br>
+            <br>
             <input type="submit">
           </div>
       </form>
@@ -24,7 +28,7 @@
           <br>
 </div>
 
-
+<h3>Your photos:</h3>
 <div class="container">
   <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
     {% for photo in photos_with_ratings %}
@@ -54,10 +58,6 @@
 </div>
 
 
-  
-
-
-
   <h3>Your ratings:</h3>
   <br>
   <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
@@ -74,17 +74,6 @@
     </div>
     {% endfor %}
   </div>
- 
-  
-
-
-
-
-
-
-
-    
-
 
     <script src="cat_rater.js"></script>
     {% endblock %}

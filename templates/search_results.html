@@ -7,9 +7,9 @@
   {% if user %}
   <h2>{{user.username}}</h2>
   <div style="text-align:center;">
-    <img src="display_pic.url"
     <a href="/users/{{user.username}}">See user details here</a>
   </div>
+
 
   {% elif photos_with_ratings %}
   <div class="container">
@@ -24,11 +24,11 @@
       </div>
       <div class="card-body">
         <p class="card-body">Rate this floof <a href="photos/{{photo['id']}}" class="card-link">here</a></p>
-        
       </div>
       </div>
     </div>
     {% endfor %}
+
 
   {% else %}
   <p>Your search did not return any results, please try again.</p>
