@@ -20,10 +20,13 @@
             <a href="/photos/{{photo['id']}}" class="card-link">Rate {{photo['name']}}</a>
             </div>
         </div>
+        <br>
       </div>
       {% endfor %}
     </div>
+
   </div>
+  <br>
 
   <h3>{{user.username | capitalize }}'s ratings:</h3>
   <br>
@@ -37,6 +40,7 @@
           <p class="card-text">Scored {{rating.score}} out of 10!</p>
         </div>
     </div>
+    <br>
     </div>
     {% endfor %}
   </div>
