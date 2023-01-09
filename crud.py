@@ -65,7 +65,7 @@ def get_users_ratings(user_id):
     """Returns user ratings"""
 
     return Rating.query.filter(Rating.user_id == user_id)
-    
+
 
 def get_photo_by_id(photo_id):
     """Gets a photo by ID"""

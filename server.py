@@ -1,5 +1,6 @@
 from flask import (Flask, jsonify, render_template, request, flash, session, redirect)
 from model import connect_to_db, db, User, Photo, Rating, connect_to_db
+from random import choice
 import cloudinary.uploader
 import os
 import crud
@@ -325,8 +326,14 @@ def search():
 
     if search_by == "username":
         user = crud.get_user_by_username(search_text)
+        user_photos = crud.get_users_photos(user)
+        display_pic = choice(user_photos)
+
+    if search_by == "pet-name":
+        photos = crud.get_photos_by_pet_name(search_text.capitalize())
     photos_with_ratings = []
-    photos = crud.get_photos_by_pet_name(search_text.capitalize())
+
+
 
     for photo in photos:
         if crud.get_photo_rating_average(photo.photo_id) == None:
@@ -364,7 +371,7 @@ def search():
     #     pets = crud.get_photos_by_pet_name(pet_name)
     #     print(f'*********{pet_name}******')
     #     print(f'*********{pets}******')
-    return render_template("search_results.html", photos_with_ratings=photos_with_ratings, user=user)
+    return render_template("search_results.html", photos_with_ratings=photos_with_ratings, user=user, display_pic=display_pic)
     # return f"search: {search_by}   search text: {
     # search_text}"
 

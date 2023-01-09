@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% block title %}Search Results{% endblock %}
 
-
-
 {% block body %}
-  <h2>Results</h2>
+  <h2>Search Results:</h2>
+  <br>
   {% if user %}
   <h2>{{user.username}}</h2>
-  <div>
+  <div style="text-align:center;">
+    <img src="display_pic.url"
     <a href="/users/{{user.username}}">See user details here</a>
   </div>
 
@@ -23,23 +23,12 @@
         <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
       </div>
       <div class="card-body">
-        <p class="card-body">Rate this floof here:</p>
-        <a href="photos/{{photo['id']}}" class="card-link">here</a>
+        <p class="card-body">Rate this floof <a href="photos/{{photo['id']}}" class="card-link">here</a></p>
+        
       </div>
       </div>
     </div>
     {% endfor %}
-
-
-  {% elif photos_with_ratings %}
-    {% for photo in photos_with_ratings %}
-    <div id="all-photos">
-      <img src="{{photo.url}}" height="256" width="180">
-      This is {{photo.name}} Rated {{photo['rating']}} out of 10!
-      <a href="photos/{{photo['id']}}">Rate this floof here</a>
-      </div>
-  {% endfor %}
- 
 
   {% else %}
   <p>Your search did not return any results, please try again.</p>
