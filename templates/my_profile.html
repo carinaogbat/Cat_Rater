@@ -9,23 +9,22 @@
     <h3>Add your next floof submission</h3>
       <form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
           <div class="form-group">
-          <input type="file" name="my-file" id="file">
+            <input type="file" name="my-file" id="file">
+            <br>
+            Tell us about this photo:
+            <input type="text" name="text" id="photo-text">
+            <br>
+            What is your pet's name?
+            <input type="text" name="name" id="photo-name">
+            <input type="submit">
+          </div>
+      </form>
           <br>
-          Tell us about this photo:
-          <input type="text" name="text" id="photo-text">
-          <br>
-          What is your pet's name?
-          <input type="text" name="name" id="photo-name">
-          <input type="submit">
-      </div>
-          </form>
-          <br>
-
-  </div>
+</div>
 
 
 <div class="container">
-    <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
+  <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
     {% for photo in photos_with_ratings %}
     
     <div class="col">
@@ -35,24 +34,51 @@
         <h5 class="card-title">{{photo['name']}}</h5>
         {% if (photo['rating'] is number) %}
         <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
-        </div>
+      </div>
         {% else %}
         <p class="card-text">This kitty has not been rated yet.</p>
-        </div>
+      </div>
         {% endif %}
-      <div class="card-body">
-        <form id="delete-photo" action="/delete" method="post">
-            <input type="hidden" id="photo-id" name="photo-id" value="{{photo['id']}}">
-            <button type="submit">Delete Photo</button>
-          </form>
-      </div>
-      </div>
-      <br>
+          <div class="card-body">
+            <form id="delete-photo" action="/delete" method="post">
+              <input type="hidden" id="photo-id" name="photo-id" value="{{photo['id']}}">
+              <button type="submit">Delete Photo</button>
+            </form>
+          </div>
     </div>
+    </div>
+    {% endfor %}
+  </div>
+      <br>
+
+</div>
+
+
   
-   
-        
-        {% endfor %}
+
+
+
+  <h3>Your ratings:</h3>
+  <br>
+  <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
+    {% for rating in ratings %}
+    <div class="col">
+      <div class="card">
+        <img src="{{rating.photo.url}}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{rating.photo.name}}</h5>
+            <p class="card-text">Scored {{rating.score}} out of 10!</p>
+          </div>
+      </div>
+      
+    </div>
+    {% endfor %}
+  </div>
+ 
+  
+
+
+
 
 
 
