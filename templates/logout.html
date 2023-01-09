@@ -2,7 +2,13 @@
 {% block title %}Sign Out{% endblock %}
 
 {% block body %}
+<br>
+<br>
   <h1>We'll miss you!</h1>
+  <br>
+  <div style="text-align:center">
+  <img src="/static/imgs/cat-leaving.gif">
+  </div>
   <br>
   <h2>Don't forget to come back soon to rate more boopable floofs!</h2>
   <br>
@@ -10,7 +16,7 @@
 <div class="wrap-form">
   <div style="text-align:center">
   <form action="/logout" method="POST">
-    <button type="submit">Log Out</button>
+    <button class="btn btn-primary btn-sm" type="submit">Log Out</button>
   </form>
   </div>
 </div>

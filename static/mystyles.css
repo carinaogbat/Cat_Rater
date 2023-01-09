@@ -27,7 +27,11 @@ card {
 .alert{
     color: red
 }
-
+.btn-primary{
+    background-color:darkcyan;
+    border-color: darkcyan;
+    outline-color: darkcyan
+}
 a {
     color:darkcyan
 }

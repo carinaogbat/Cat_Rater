@@ -90,7 +90,7 @@ def get_all_photos_with_ratings():
 def delete_photo_by_id(photo_id):
     """Deletes a photo with a given ID"""
 
-    return db.session.query(Photo).filter_by(id=photo_id).delete()
+    return db.session.query(Photo).filter_by(photo_id=photo_id).delete()
 
 
 # if __name__ == '__main__':

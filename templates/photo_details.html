@@ -4,6 +4,7 @@
 {% block body %}
 
   <div class="container">
+  <div class="text-align:center">
     <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
     <div class="col">
     <div class="card">
@@ -15,23 +16,22 @@
       </div>
       <div class="card-body">
         <div class="card-body">
-
       </div>
       </div>
     </div>
+  </div>
   
-
   <div class="container">
     <h3>Rate Photo:</h3>
       <br>
-    <p>Ready to rate this cat?</p>
-      <br>
+    <h4>Ready to rate this cat?</h4>
     <div class="wrap-form">
     <form action="/photos/{{ photo.photo_id }}" method="POST">
-      Enter a number between 1 and 10 <input type="text" name="rating">
-      <p>
-      <input type="submit">
-      </p>
+      <p>Enter a number between 1 and 10 </p>
+      <input type="text" name="rating">
+      <br>
+      <br>
+      <button class="btn btn-primary btn-sm" type="submit">Submit</button>
     </form>
     </div>
 </div>

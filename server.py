@@ -154,22 +154,22 @@ def show_photo(photo_id):
         flash("You must be signed in to rate a cat.", category="message")
 
     rating = request.form.get("rating")
+    photo_username = crud.get_user_by_id(photo.photo_id)
+    if not rating:
+        flash("Please enter a rating before clicking submit")
     if not rating.isdigit():
         flash("Please enter a number between 1 and 10", category="message")
     else:
         user_rating = int(rating)
-
-    photo_username = crud.get_user_by_id(photo.photo_id)
-
-    if user_rating > 10 or user_rating < 0:
-        flash("Please enter a number between 1 and 10", category="message")
-    elif user_rating:
-        user = crud.get_user_by_username(username)
-        rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
-        db.session.add(rating)
-        db.session.commit()
-        flash(f"You rated this cat a {rating.score} out of 10!", category="message")
-        flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!', category="message")
+        if user_rating > 10 or user_rating < 0:
+            flash("Please enter a number between 1 and 10", category="message")
+        elif user_rating:
+            user = crud.get_user_by_username(username)
+            rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
+            db.session.add(rating)
+            db.session.commit()
+            flash(f"You rated this cat a {rating.score} out of 10!", category="message")
+            flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!', category="message")
 
     return render_template("photo_details.html", photo=photo, photo_rating=photo_rating, photo_username=photo_username)
 
