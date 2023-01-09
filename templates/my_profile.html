@@ -6,6 +6,7 @@
 
 
 <div class="container">
+  <div style="text-align:right">
     <h3>Add your next floof submission</h3>
       <form id="photo-upload" action="/myprofile/<username>" method="post" enctype="multipart/form-data">
           <div class="form-group">
@@ -19,6 +20,7 @@
             <input type="submit">
           </div>
       </form>
+      </div>
           <br>
 </div>
 
@@ -26,7 +28,6 @@
 <div class="container">
   <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
     {% for photo in photos_with_ratings %}
-    
     <div class="col">
     <div class="card">
       <img src="{{photo['url']}}" class="card-img-top">
@@ -46,11 +47,10 @@
             </form>
           </div>
     </div>
+    <br>
     </div>
     {% endfor %}
   </div>
-      <br>
-
 </div>
 
 
@@ -70,7 +70,7 @@
             <p class="card-text">Scored {{rating.score}} out of 10!</p>
           </div>
       </div>
-      
+      <br>
     </div>
     {% endfor %}
   </div>
