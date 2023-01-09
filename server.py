@@ -219,7 +219,7 @@ def display_user_profile(username):
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
 
-    return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
+    return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings, username=username)
 
 @app.route("/myprofile/<username>", methods=["POST"])
 def show_user_profile(username):
@@ -269,7 +269,7 @@ def show_user_profile(username):
     db.session.commit()
 
 
-    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings, photos_with_ratings=photos_with_ratings)
+    return render_template("my_profile.html", user=user, photos=photos, ratings=ratings, photos_with_ratings=photos_with_ratings, username=username)
 
 @app.route("/users/<username>")
 def show_user(username):

@@ -27,44 +27,31 @@
 <div class="container">
     <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
     {% for photo in photos_with_ratings %}
-    {% if (photo['rating'] is number) %}
+    
     <div class="col">
     <div class="card">
       <img src="{{photo['url']}}" class="card-img-top">
       <div class="card-body">
         <h5 class="card-title">{{photo['name']}}</h5>
+        {% if (photo['rating'] is number) %}
         <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
-      </div>
+        </div>
+        {% else %}
+        <p class="card-text">This kitty has not been rated yet.</p>
+        </div>
+        {% endif %}
       <div class="card-body">
         <form id="delete-photo" action="/delete" method="post">
             <input type="hidden" id="photo-id" name="photo-id" value="{{photo['id']}}">
             <button type="submit">Delete Photo</button>
           </form>
-          
       </div>
       </div>
       <br>
     </div>
   
-    {% else %}
-
-    <div class="col">
-        <div class="card">
-          <img src="{{photo['url']}}" class="card-img-top">
-          <div class="card-body">
-            <h5 class="card-title">{{photo['name']}}</h5>
-            <p class="card-text">This cat has not been rated yet</p>
-          </div>
-          <div class="card-body">
-            <form id="delete-photo" action="/delete" method="post">
-                <input type="hidden" id="photo-id" name="photo-id" value="{{photo['id']}}">
-                <button type="submit">Delete Photo</button>
-              </form>
-          </div>
-          </div>
-          <br>
-        </div>
-        {% endif %}
+   
+        
         {% endfor %}
 
 

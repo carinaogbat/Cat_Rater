@@ -39,7 +39,7 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 //     });
 // })
 
-document.querySelector('#delete-photo').addEventListener('submit', (evt)=>
+document.querySelector('#delete-photo').addEventListener('click', (evt)=>
 {
     evt.preventDefault();
     const deletePhoto = {
@@ -58,4 +58,14 @@ document.querySelector('#delete-photo').addEventListener('submit', (evt)=>
     .then((responseJson) => {
         alert(responseJson.status);
     });
+});
+
+const container = document.querySelector('.container');
+// The Scroll Event.
+window.addEventListener('scroll',()=>{
+	const {scrollHeight,scrollTop,clientHeight} = document.documentElement;
+	if(scrollTop + clientHeight > scrollHeight - 5){
+		setTimeout(createPost,2000);
+
+	}
 });
