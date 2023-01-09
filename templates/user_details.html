@@ -14,8 +14,13 @@
           <img src="{{photo['url']}}" class="card-img-top">
             <div class="card-body">
               <h5 class="card-title">{{photo['name']}}</h5>
+              {% if (photo['rating'] is number) %}
               <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
             </div>
+            {% else %}
+            <p class="card-text">This kitty has not been rated yet</p>
+            </div>
+            {% endif %}
             <div class="card-body">
             <a href="/photos/{{photo['id']}}" class="card-link">Rate {{photo['name']}}</a>
             </div>
