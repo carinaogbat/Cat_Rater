@@ -26,7 +26,7 @@
       <img src="{{photo.url}}" class="card-img-top">
       <div class="card-body">
         <h5 class="card-title">{{photo.name}}</h5>
-        <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
+        <p class="card-text"><strong>Rated {{photo['rating']}} out of 10!</strong></p>
       </div>
       <div class="card-body">
         <p class="card-body">Rate this floof <a href="photos/{{photo['id']}}" class="card-link">here</a></p>
@@ -36,11 +36,10 @@
     </div>
     {% endfor %}
 
-
   {% else %}
   <br>
   <div style="text-align:center;">
-    <img id="search-img" src="/static/imgs/shocked_cat.jpeg">
+    <img src="/static/imgs/shocked_cat.jpeg">
     <br>
     <br>
     <p>Your search did not return any results, please try <a href="/search">again</a>.</p>

@@ -15,10 +15,10 @@
             <div class="card-body">
               <h5 class="card-title">{{photo['name']}}</h5>
               {% if (photo['rating'] is number) %}
-              <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
+              <p class="card-text"><strong>Rated {{photo['rating']}} out of 10!</strong></p>
             </div>
             {% else %}
-            <p class="card-text">This kitty has not been rated yet</p>
+            <p class="card-text"><strong>This kitty has not been rated yet</strong></p>
             </div>
             {% endif %}
             <div class="card-body">
@@ -42,7 +42,7 @@
       <img src="{{rating.photo.url}}" class="card-img-top">
         <div class="card-body">
           <h5 class="card-title">{{rating.photo.name}}</h5>
-          <p class="card-text">Scored {{rating.score}} out of 10!</p>
+          <p class="card-text"><strong>Scored {{rating.score}} out of 10!</strong></p>
         </div>
     </div>
     <br>

@@ -39,11 +39,12 @@
       <img src="{{photo['url']}}" class="card-img-top">
       <div class="card-body">
         <h5 class="card-title">{{photo['name']}}</h5>
+        <p class="card-text">{{photo.text}}</p>
         {% if (photo['rating'] is number) %}
-        <p class="card-text">Rated {{photo['rating']}} out of 10!</p>
+        <p class="card-text"><strong>Rated {{photo['rating']}} out of 10!</strong></p>
       </div>
         {% else %}
-        <p class="card-text">This kitty has not been rated yet.</p>
+        <p class="card-text"><strong>This kitty has not been rated yet.</strong></p>
       </div>
         {% endif %}
           <div class="card-body">
@@ -52,7 +53,7 @@
               <button class="btn btn-primary btn-sm" type="submit" id="delete-button"><i class="fa fa-trash"></i></button>
             </form>
           </div>
-    </div>
+        </div>
     <br>
     </div>
     {% endfor %}
@@ -71,7 +72,7 @@
         <img src="{{rating.photo.url}}" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{rating.photo.name}}</h5>
-            <p class="card-text">Scored {{rating.score}} out of 10!</p>
+            <p class="card-text"><strong>Scored {{rating.score}} out of 10!</strong></p>
           </div>
       </div>
       <br>
