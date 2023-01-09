@@ -12,14 +12,18 @@
     <title>
       {% block title %}{% endblock %}
     </title>
+    <div class="container">
     <nav class="navbar sticky-top navbar-dark bg-dark" style="background-color: #e3f2fd;">
+      <div class="container-fluid">
       <a href="/">Home</href>
       <a href="/myprofile/<username>">My Profile</a>
       <a href="/search">Search</a>
       <a href="/signup">Sign Up</a>
       <a href="/login">Log In</a>
       <a href="/logout">Log Out</a>
+    </div>
     </nav>
+  </div>
 
     {% block head %}{% endblock %}
   </head>
