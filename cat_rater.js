@@ -1,6 +1,6 @@
 document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 {
-    
+    evt.preventDefault();
     const fileInput = {
         file : document.querySelector('file').value,
         text : document.querySelector('#photo-text').value,
@@ -42,6 +42,15 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 document.querySelector('#delete-photo').addEventListener('click', (evt)=>
 {
     evt.preventDefault();
+
+    function confirmDelete(){
+        let text = "Do you really want to delete this photo?";
+        if (confirm(text) == true) {
+            text = "Deleting photo";
+        } else {
+            text = "Cancelling delete"
+        }
+    }
     const deletePhoto = {
     
         deletePhotoId : document.querySelector('#photo-id').value,
@@ -69,3 +78,4 @@ window.addEventListener('scroll',()=>{
 
 	}
 });
+
