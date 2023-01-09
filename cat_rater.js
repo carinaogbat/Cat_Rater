@@ -20,24 +20,27 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 });
 
 
-// document.querySelector('#search-select').addEventListener('submit', (evt)=>
-// {
-//     evt.preventDefault();
-//     const searchInput = {
-//         search : document.querySelector('#search-select').value,
-//     };
-//     fetch("/search", {
-//         method: 'POST',
-//         body: JSON.stringify(fileInput),
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//         alert(responseJson.status);
-//     });
-// })
+document.querySelector('#signup').addEventListener('submit', (evt)=>
+{
+    evt.preventDefault();
+    const fileInput = {
+        email : document.querySelector('email').value,
+        password : document.querySelector('password').value,
+        username : document.querySelector('username').value
+    };
+    fetch("/signup", {
+        method: 'POST',
+        body: JSON.stringify(fileInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        alert(responseJson.status);
+    });
+});
+
 
 document.querySelector('#delete-photo').addEventListener('click', (evt)=>
 {

@@ -20,8 +20,10 @@ card {
     background-color: #F2FCFF
 }
 
-.message{
-    color: black
+.message {
+    text-align: center;
+    text-emphasis-style: bold;
+    color: #25838F
 }
 
 .alert{
