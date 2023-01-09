@@ -31,3 +31,18 @@ card {
 a {
     color:darkcyan
 }
+
+h1 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: center;
+}
+ h2 {
+
+    font-family: optima;
+    text-align: center;
+ }
+
+ h3 {
+    font-family: optima;
+    text-align: center;
+ }
