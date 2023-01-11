@@ -84,6 +84,11 @@ def delete_photo_by_id(photo_id):
 
     return db.session.query(Photo).filter_by(photo_id=photo_id).delete()
 
+def delete_rating_by_id(rating_id):
+    """Deletes a photo with a given ID"""
+
+    return db.session.query(Rating).filter_by(rating_id=rating_id).delete()
+
 
 # if __name__ == '__main__':
 #     from server import app

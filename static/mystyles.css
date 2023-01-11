@@ -36,6 +36,12 @@ card {
     border-color: darkcyan;
     outline-color: darkcyan
 }
+
+#nav-bar {
+    padding-left: 75px;
+    padding-right: 75px;
+}
+
 a {
     color:darkcyan
 }
