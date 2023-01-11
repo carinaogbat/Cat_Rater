@@ -6,7 +6,7 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
         text : document.querySelector('#photo-text').value,
         name : document.querySelector('#photo-name').value
     };
-    fetch("/myprofile/<username>", {
+    fetch("/myprofile", {
         method: 'POST',
         body: JSON.stringify(fileInput),
         headers: {
@@ -28,6 +28,10 @@ document.querySelector('#signup').addEventListener('submit', (evt)=>
         password : document.querySelector('password').value,
         username : document.querySelector('username').value
     };
+    if (fileInput.email.length < 5){
+        evt.preventDefault();
+        alert("Error, not a valid email")
+    }
     fetch("/signup", {
         method: 'POST',
         body: JSON.stringify(fileInput),
@@ -46,31 +50,27 @@ document.querySelector('#delete-photo').addEventListener('click', (evt)=>
 {
     evt.preventDefault();
 
-    function confirmDelete(){
-        let text = "Do you really want to delete this photo?";
-        if (confirm(text) == true) {
-            text = "Deleting photo";
-        } else {
-            text = "Cancelling delete"
+    const response = confirm("Are you sure you want to delete this photo?")
+    if (response) {
+
+        const deletePhoto = {
+            deletePhotoId : document.querySelector('#photo-id').value,
+        };
+        fetch("/delete", {
+            method: 'POST',
+            body: JSON.stringify(deletePhoto),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            alert(responseJson.status);
+        });
+
         }
     }
-    const deletePhoto = {
-    
-        deletePhotoId : document.querySelector('#photo-id').value,
-
-    };
-    fetch("/delete", {
-        method: 'POST',
-        body: JSON.stringify(deletePhoto),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-        alert(responseJson.status);
-    });
-});
+);
 
 const container = document.querySelector('.container');
 // The Scroll Event.

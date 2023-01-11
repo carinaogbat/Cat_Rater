@@ -51,7 +51,7 @@ def display_login_page():
     user_in_session = session.get("username")
     if user_in_session:
         flash("You are already signed in", category="error")
-        return redirect("/myprofile/<username>")
+        return redirect("/myprofile")
     else:
         return render_template("login.html")
 
@@ -71,7 +71,7 @@ def login():
         session["username"] = user.username
         flash(f"Welcome back {user.username}", category="message")
 
-        return redirect("/myprofile/<username>")
+        return redirect("/myprofile")
 
 @app.route("/logout")
 def display_logout():
@@ -99,7 +99,7 @@ def display_signup():
     user = session.get("username")
     if user:
         flash("You are already signed in", category="message")
-        return redirect("/myprofile/<username>")
+        return redirect("/myprofile")
     else:
 
         return render_template("signup.html")
@@ -115,14 +115,14 @@ def sign_up():
 
     if user:
         flash("Error, there is already an account with this email, please try again", category="error")
-        return redirect("/myprofile/<username>")
+        return redirect("/myprofile")
     else:
         user = crud.create_user(username=username, email=email, password=password)
         db.session.add(user)
         db.session.commit()
         flash("Account created", category="message")
 
-    return redirect("/myprofile/<username>")
+    return redirect("/myprofile")
 
 @app.route("/photos/<photo_id>")
 def display_photo_details(photo_id):
@@ -173,8 +173,8 @@ def show_photo(photo_id):
 
     return render_template("photo_details.html", photo=photo, photo_rating=photo_rating, photo_username=photo_username)
 
-@app.route("/myprofile/<username>")
-def display_user_profile(username):
+@app.route("/myprofile")
+def display_user_profile():
     """Show your profile page"""
     username = session.get("username")
     if username is None:
@@ -212,10 +212,10 @@ def display_user_profile(username):
             
     return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings, username=username)
 
-@app.route("/myprofile/<username>", methods=["POST"])
-def show_user_profile(username):
-    """Show your profile page"""
+@app.route("/myprofile", methods=["POST"])
+def show_user_profile():
     username = session.get("username")
+    """Show your profile page"""
     if username is None:
         flash("Please sign in to see your profile page", category="message")
         return redirect("/login")

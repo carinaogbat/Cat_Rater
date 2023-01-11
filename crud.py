@@ -23,13 +23,6 @@ def create_rating(user, photo, score):
 
     return rating
 
-# def create_follow(user_followed, user_following):
-#     """Creates a following"""
-
-#     follow = Follow(id_of_user_followed=user_followed, id_of_follower=user_following)
-
-#     return follow
-
 def get_user_by_id(user_id):
     """Returns a user by ID"""
 
@@ -53,13 +46,12 @@ def get_all_users():
 def get_all_photos():
     """Returns all photos"""
 
-
-    return Photo.query.all()
+    return Photo.query.order_by(Photo.time_created.desc()).all()
 
 def get_users_photos(user_id):
     """Returns user photos"""
 
-    return Photo.query.filter(Photo.user_id == user_id)
+    return Photo.query.filter(Photo.user_id == user_id).order_by(Photo.time_created.desc())
 
 def get_users_ratings(user_id):
     """Returns user ratings"""
