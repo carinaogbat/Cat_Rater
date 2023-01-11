@@ -72,6 +72,32 @@ document.querySelector('#delete-photo').addEventListener('click', (evt)=>
     }
 );
 
+document.querySelector('#delete-rating').addEventListener('click', (evt)=>
+{
+    evt.preventDefault();
+
+    const response = confirm("Are you sure you want to delete this photo?")
+    if (response) {
+
+        const deletePhoto = {
+            deletePhotoId : document.querySelector('#rating-id').value,
+        };
+        fetch("/delete_rating", {
+            method: 'POST',
+            body: JSON.stringify(deletePhoto),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+            alert(responseJson.status);
+        });
+
+        }
+    }
+);
+
 const container = document.querySelector('.container');
 // The Scroll Event.
 window.addEventListener('scroll',()=>{

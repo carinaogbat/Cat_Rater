@@ -386,6 +386,52 @@ def display():
 
     return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
 
+@app.route("/delete_rating")
+def delete_rating():
+    """Route to delete rating"""
+
+    return render_template("my_profile.html")
+
+@app.route("/delete_rating", methods=["POST"])
+def display_delete():
+    username = session.get("username")
+    if username is None:
+        flash("Please sign in to see your profile page")
+        return redirect("/login")
+    else:
+        user = crud.get_user_by_username(username)
+        photos = crud.get_users_photos(user.user_id)
+        ratings = crud.get_users_ratings(user.user_id)
+        photos_with_ratings = []
+    for photo in photos:
+        if crud.get_photo_rating_average(photo.photo_id) == None:
+            rating = "(whoops this kitty has not been rated yet)"
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
+        else:
+            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
+            photo_with_rating = {}
+            photo_with_rating['id'] = photo.photo_id
+            photo_with_rating['rating'] = rating
+            photo_with_rating['username'] = photo.user.username
+            photo_with_rating['url'] = photo.url
+            photo_with_rating['text'] = photo.text
+            photo_with_rating['name'] = photo.name
+            photos_with_ratings.append(photo_with_rating)
+
+    delete = request.form.get("rating-id")
+    crud.delete_rating_by_id(delete)
+    db.session.commit()
+
+    return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
+
+
 
 
 if __name__ == "__main__":
