@@ -28,12 +28,12 @@
       <br>
     <h4>Ready to rate this cat?</h4>
     <div class="wrap-form">
-    <form action="/photos/{{ photo.photo_id }}" method="POST">
+    <form action="/photos/{{ photo.photo_id }}" method="POST" >
       <p>Enter a number between 1 and 10 </p>
       <input type="text" name="rating">
       <br>
       <br>
-      <button class="btn btn-primary btn-sm" type="submit">Submit</button>
+      <button class="btn btn-primary btn-sm" id="create-rating" type="submit">Submit</button>
     </form>
     </div>
 </div>

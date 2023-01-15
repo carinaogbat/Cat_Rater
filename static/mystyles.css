@@ -26,6 +26,23 @@ card {
     color: #25838F
 }
 
+.rating-score {
+    padding-top: 25px; 
+    padding-bottom: 10px;
+    font-size: x-large;
+    text-align: center;
+    text-emphasis-style: bold;
+    color: #25838F
+}
+
+.rating-message {
+    padding-bottom: 10px;
+    font-size: x-large;
+    text-align: center;
+    text-emphasis-style: bold;
+    color: #25838F
+}
+
 .error {
     text-align: center;
     text-emphasis-style: bold;

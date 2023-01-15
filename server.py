@@ -69,7 +69,6 @@ def login():
         return redirect("/login")
     else:
         session["username"] = user.username
-        flash(f"Welcome back {user.username}", category="message")
 
         return redirect("/myprofile")
 
@@ -168,8 +167,8 @@ def show_photo(photo_id):
             rating = crud.create_rating(user=user, photo=photo, score=user_rating+10)
             db.session.add(rating)
             db.session.commit()
-            flash(f"You rated this cat a {rating.score} out of 10!", category="message")
-            flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!', category="message")
+            flash(f"You rated this cat a {rating.score} out of 10!", category="rating-score")
+            flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!', category="rating-message")
 
     return render_template("photo_details.html", photo=photo, photo_rating=photo_rating, photo_username=photo_username)
 
