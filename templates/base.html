@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/mystyles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width">
+
     <title>
       {% block title %}{% endblock %}
     </title>
@@ -31,8 +32,11 @@
     <div class="{{category}}">{{message}}</div>
   {% endfor %}
   {% endwith %}
+ 
+
     {% block body %}{% endblock %}
 
     {% block after_body %}{% endblock %}
   </body>
+  <script src="static/cat_rater.js"></script>
 </html>

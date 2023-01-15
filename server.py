@@ -50,7 +50,7 @@ def display_login_page():
 
     user_in_session = session.get("username")
     if user_in_session:
-        flash("You are already signed in", category="error")
+        flash("You are already signed in", category="message")
         return redirect("/myprofile")
     else:
         return render_template("login.html")
