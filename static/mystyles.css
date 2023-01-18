@@ -21,6 +21,9 @@ card {
 }
 
 .message {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: large;
     text-align: center;
     text-emphasis-style: bold;
     color: #25838F

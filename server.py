@@ -149,6 +149,7 @@ def show_photo(photo_id):
         photo_average_rating = round(crud.get_photo_rating_average(photo_id))
         photo_rating = photo_average_rating
     username = session.get("username")
+
     if username is None:
         flash("You must be signed in to rate a cat.", category="message")
 
