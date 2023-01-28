@@ -5,7 +5,7 @@
 <br>
 <h1>Welcome {{user.username | capitalize}}</h1> 
 
-
+<!-- 
 <div class="container">
   <div style="text-align:right">
     <h4>Add your next floof submission:</h4>
@@ -28,7 +28,7 @@
       </form>
       </div>
           <br>
-</div>
+</div> -->
 
 <h3>Your photos:</h3>
 <br>
@@ -49,10 +49,10 @@
       </div>
         {% endif %}
         <div class="card-body">
-          <form id="delete-photo" action="/delete" method="post">
+          
             <input type="hidden" id="photo-id" name="photo-id" value="{{photo['id']}}">
             <button class="btn btn-primary btn-sm" type="submit" id="delete-button"><i class="fa fa-trash"></i></button>
-          </form>
+          
         </div>
       </div>
   <br>
@@ -76,7 +76,7 @@
             <p class="card-text"><strong>Scored {{rating.score}} out of 10!</strong></p>
           </div>
           <div class="card-body">
-            <form id="delete-rating" action="/delete_rating" method="post">
+            <form id="delete-rating">
               <input type="hidden" id="rating-id" name="rating-id" value="{{rating.rating_id}}">
               <button class="btn btn-primary btn-sm" type="submit" id="delete-button-rating"><i class="fa fa-trash"></i></button>
             </form>
