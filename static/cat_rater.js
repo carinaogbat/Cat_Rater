@@ -48,14 +48,9 @@
 //     });
 // });
 
-// shouldBeMyButton = document.querySelector('#delete-photo');
-// document.querySelector('#delete-photo').addEventListener("submit", (evt)=>
-// {
-//     evt.preventDefault();
-// }
-// )
-const deleteButtons = document.querySelectorAll('#delete-button')
-for (const button of deleteButtons) {
+
+const photoDeleteButtons = document.querySelectorAll('#delete-photo-button')
+for (const button of photoDeleteButtons) {
 
 button.addEventListener('click', (evt)=>
 {
@@ -77,7 +72,7 @@ button.addEventListener('click', (evt)=>
         .then((response) => response.json())
         .then((responseJson) => {
             if (responseJson.status == 'ok'){
-                console.log(evt.target.parentElement.parentElement.parentElement)
+                // console.log(evt.target.parentElement.parentElement.parentElement)
                 evt.target.parentElement.parentElement.parentElement.remove();
             }
         });
@@ -89,38 +84,37 @@ button.addEventListener('click', (evt)=>
 }
 
 
+const ratingDeleteButtons = document.querySelectorAll('#delete-rating-button')
 
-// shouldBeMyButton.addEventListener('click', () => {
-// 	alert("Here I am!")
-// });
+for (const button of ratingDeleteButtons) {
+button.addEventListener('click', (evt)=>
+{
+    evt.preventDefault();
 
-
-// document.querySelector('#delete-rating').addEventListener('click', (evt)=>
-// {
-//     evt.preventDefault();
-
-//     // const response = confirm("Are you sure you want to delete this rating?");
-//     // console.log(response)
-//     // if (response) {
+    const response = confirm("Are you sure you want to delete this rating?");
+    if (response) {
         
-//         const deletePhoto = {
-//             deletePhotoId : document.querySelector('#rating-id').value,
-//         };
-//         fetch("/delete_rating", {
-//             method: 'POST',
-//             body: JSON.stringify(deletePhoto),
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         })
-//         .then((response) => response.json())
-//         .then((responseJson) => {
-//             alert(responseJson.status);
-//         });
+        const deleteRating = {
+            deleteRatingId : document.querySelector('#rating-id').value,
+        };
+        fetch("/delete_rating", {
+            method: 'POST',
+            body: JSON.stringify(deleteRating),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then((response) => response.json())
+        .then((responseJson) => {
+        if (responseJson.status == 'ok') {
+            evt.target.parentElement.parentElement.parentElement.remove()
+            }
+        });
 
-//         }
-//     // }
-// );
+        }
+    }
+);
+    }
 
 // document.querySelector('#create-rating').addEventListener('click', (evt)=>
 // {

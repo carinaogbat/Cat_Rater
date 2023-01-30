@@ -353,38 +353,13 @@ def display():
     if username is None:
         flash("Please sign in to see your profile page")
         return redirect("/login")
-    # else:
-    #     user = crud.get_user_by_username(username)
-    #     photos = crud.get_users_photos(user.user_id)
-    #     ratings = crud.get_users_ratings(user.user_id)
-    #     photos_with_ratings = []
-    # for photo in photos:
-    #     if crud.get_photo_rating_average(photo.photo_id) == None:
-    #         rating = "(whoops this kitty has not been rated yet)"
-    #         photo_with_rating = {}
-    #         photo_with_rating['id'] = photo.photo_id
-    #         photo_with_rating['rating'] = rating
-    #         photo_with_rating['username'] = photo.user.username
-    #         photo_with_rating['url'] = photo.url
-    #         photo_with_rating['text'] = photo.text
-    #         photo_with_rating['name'] = photo.name
-    #         photos_with_ratings.append(photo_with_rating)
-    #     else:
-    #         rating = round(crud.get_photo_rating_average(photo.photo_id)) 
-    #         photo_with_rating = {}
-    #         photo_with_rating['id'] = photo.photo_id
-    #         photo_with_rating['rating'] = rating
-    #         photo_with_rating['username'] = photo.user.username
-    #         photo_with_rating['url'] = photo.url
-    #         photo_with_rating['text'] = photo.text
-    #         photo_with_rating['name'] = photo.name
-    #         photos_with_ratings.append(photo_with_rating)
+   
     content = request.get_json()
     delete = content['deletePhotoId']
     crud.delete_photo_by_id(delete)
     db.session.commit()
 
-    return jsonify({'status': "ok"})
+    return jsonify({'status': 'ok'})
 
 @app.route("/delete_rating")
 def delete_rating():
@@ -398,39 +373,13 @@ def display_delete():
     if username is None:
         flash("Please sign in to see your profile page")
         return redirect("/login")
-    else:
-        user = crud.get_user_by_username(username)
-        photos = crud.get_users_photos(user.user_id)
-        ratings = crud.get_users_ratings(user.user_id)
-        photos_with_ratings = []
-    for photo in photos:
-        if crud.get_photo_rating_average(photo.photo_id) == None:
-            rating = "(whoops this kitty has not been rated yet)"
-            photo_with_rating = {}
-            photo_with_rating['id'] = photo.photo_id
-            photo_with_rating['rating'] = rating
-            photo_with_rating['username'] = photo.user.username
-            photo_with_rating['url'] = photo.url
-            photo_with_rating['text'] = photo.text
-            photo_with_rating['name'] = photo.name
-            photos_with_ratings.append(photo_with_rating)
-        else:
-            rating = round(crud.get_photo_rating_average(photo.photo_id)) 
-            photo_with_rating = {}
-            photo_with_rating['id'] = photo.photo_id
-            photo_with_rating['rating'] = rating
-            photo_with_rating['username'] = photo.user.username
-            photo_with_rating['url'] = photo.url
-            photo_with_rating['text'] = photo.text
-            photo_with_rating['name'] = photo.name
-            photos_with_ratings.append(photo_with_rating)
-
-    delete = request.form.get("rating-id")
+    
+    content = request.get_json()
+    delete = content['deleteRatingId']
     crud.delete_rating_by_id(delete)
     db.session.commit()
 
-    return render_template("my_profile.html", user=user, photos_with_ratings=photos_with_ratings, ratings=ratings)
-
+    return jsonify({'status':'ok'})
 
 
 
