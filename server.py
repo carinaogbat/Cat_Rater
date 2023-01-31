@@ -376,6 +376,8 @@ def display_delete():
     
     content = request.get_json()
     delete = content['deleteRatingId']
+    print("*"*75)
+    print(delete)
     crud.delete_rating_by_id(delete)
     db.session.commit()
 

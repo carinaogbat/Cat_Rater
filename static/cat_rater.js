@@ -58,7 +58,6 @@ button.addEventListener('click', (evt)=>
         const response = confirm("Are you sure you want to delete this photo?");
     if (response) {
 
-
         const deletePhoto = {
             deletePhotoId : document.querySelector('#photo-id').value,
         };
@@ -85,7 +84,6 @@ button.addEventListener('click', (evt)=>
 
 
 const ratingDeleteButtons = document.querySelectorAll('#delete-rating-button')
-
 for (const button of ratingDeleteButtons) {
 button.addEventListener('click', (evt)=>
 {
@@ -106,7 +104,7 @@ button.addEventListener('click', (evt)=>
         })
         .then((response) => response.json())
         .then((responseJson) => {
-        if (responseJson.status == 'ok') {
+            if (responseJson.status == 'ok') {
             evt.target.parentElement.parentElement.parentElement.remove()
             }
         });
