@@ -107,10 +107,11 @@ def display_signup():
 def sign_up():
     """Signs a user up and adds them to the database"""
 
-    email = request.form.get("email".lower())
-    password = request.form.get("password")
-    username = request.form.get("username".lower())
-    user = crud.get_user_by_email(email)
+    user = session.get("username")
+    content = request.get_json()
+    email = content['email'].lower()
+    username = content['username'].lower()
+    password = content['password'].lower()
 
     if user:
         flash("Error, there is already an account with this email, please try again", category="error")
@@ -121,7 +122,7 @@ def sign_up():
         db.session.commit()
         flash("Account created", category="message")
 
-    return redirect("/myprofile")
+    return jsonify({'status':'ok'})
 
 @app.route("/photos/<photo_id>")
 def display_photo_details(photo_id):

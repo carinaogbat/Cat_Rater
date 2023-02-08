@@ -22,31 +22,30 @@
 //     });
 // });
 
-
-// document.querySelector('#signup').addEventListener('submit', (evt)=>
-// {
-//     evt.preventDefault();
-//     const fileInput = {
-//         email : document.querySelector('email').value,
-//         password : document.querySelector('password').value,
-//         username : document.querySelector('username').value
-//     };
-//     if (fileInput.email.length < 5){
-//         evt.preventDefault();
-//         alert("Error, not a valid email")
-//     }
-//     fetch("/signup", {
-//         method: 'POST',
-//         body: JSON.stringify(fileInput),
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//         alert(responseJson.status);
-//     });
-// });
+const signUpButton = document.querySelector('#signup-button')
+signUpButton.addEventListener('click', (evt)=>
+{
+    evt.preventDefault();
+    const fileInput = {
+        email : document.querySelector('#signup-email').value,
+        password : document.querySelector('#signup-password').value,
+        username : document.querySelector('#signup-username').value,
+    };
+        console.log(fileInput)
+    fetch("/signup", {
+        method: 'POST',
+        body: JSON.stringify(fileInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        if (responseJson.status == 'ok'){
+            alert("Account successfully created")
+        }
+    });
+});
 
 
 const photoDeleteButtons = document.querySelectorAll('#delete-photo-button')
