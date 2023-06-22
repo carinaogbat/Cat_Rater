@@ -18,6 +18,7 @@ app.jinja_env.undefined = StrictUndefined
 def all_photos():
     """View all rated photos."""
     
+    user_in_session = session.get("username")
     photos = crud.get_all_photos()
     photos_with_ratings = []
     for photo in photos:
@@ -42,7 +43,7 @@ def all_photos():
             photo_with_rating['name'] = photo.name
             photos_with_ratings.append(photo_with_rating)
 
-    return render_template("homepage.html", photos_with_ratings=photos_with_ratings)
+    return render_template("homepage.html", photos_with_ratings=photos_with_ratings,user_in_session=user_in_session)
 
 @app.route("/login")
 def display_login_page():

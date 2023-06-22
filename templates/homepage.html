@@ -8,7 +8,11 @@
   <br>
   <h2>Where you get to rate the most boopable floofs!</h2>
   <br>
+  {% if not user_in_session %}
   <h3>To rate floofs <a href="login">log in</a> or <a href="/signup">sign up</a></h3>
+  {% else %}
+  <h3>Rate Floofs Below:</h3>
+  {% endif %}
   <br>
 
 <div class="container">
