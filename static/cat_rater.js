@@ -1,38 +1,15 @@
 
 
 // const testPhoto = document.querySelector('#photo-upload');
-// document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
-// {
-//     evt.preventDefault();
-//     const fileInput = {
-//         file : document.querySelector('file').value,
-//         text : document.querySelector('#photo-text').value,
-//         name : document.querySelector('#photo-name').value
-//     };
-//     fetch("/myprofile", {
-//         method: 'POST',
-//         body: JSON.stringify(fileInput),
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//         alert(responseJson.status);
-//     });
-// });
-
-const signUpButton = document.querySelector('#signup-button')
-signUpButton.addEventListener('click', (evt)=>
+document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
     const fileInput = {
-        email : document.querySelector('#signup-email').value,
-        password : document.querySelector('#signup-password').value,
-        username : document.querySelector('#signup-username').value,
+        file : document.querySelector('file').value,
+        text : document.querySelector('#photo-text').value,
+        name : document.querySelector('#photo-name').value
     };
-        console.log(fileInput)
-    fetch("/signup", {
+    fetch("/myprofile", {
         method: 'POST',
         body: JSON.stringify(fileInput),
         headers: {
@@ -41,11 +18,34 @@ signUpButton.addEventListener('click', (evt)=>
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        if (responseJson.status == 'ok'){
-            alert("Account successfully created")
-        }
+        alert(responseJson.status);
     });
 });
+
+// const signUpButton = document.querySelector('#signup-button')
+// signUpButton.addEventListener('click', (evt)=>
+// {
+//     evt.preventDefault();
+//     const fileInput = {
+//         email : document.querySelector('#signup-email').value,
+//         password : document.querySelector('#signup-password').value,
+//         username : document.querySelector('#signup-username').value,
+//     };
+//         console.log(fileInput)
+//     fetch("/signup", {
+//         method: 'POST',
+//         body: JSON.stringify(fileInput),
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     })
+//     .then((response) => response.json())
+//     .then((responseJson) => {
+//         if (responseJson.status == 'ok'){
+//             alert("Account successfully created")
+//         }
+//     });
+// });
 
 
 const photoDeleteButtons = document.querySelectorAll('#delete-photo-button')
