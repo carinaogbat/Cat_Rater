@@ -1,5 +1,26 @@
 
 
+
+document.querySelector('#login_form').addEventListener('submit', (evt)=>
+{
+    evt.preventDefault();
+    const loginInput = {
+        email : document.querySelector('#login-email').value,
+        password : document.querySelector('#login-password').value
+    };
+    fetch("/login", {
+        method: 'POST',
+        body: JSON.stringify(loginInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        alert(responseJson.status);
+    });
+});
+
 // const testPhoto = document.querySelector('#photo-upload');
 document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 {

@@ -60,9 +60,14 @@ def display_login_page():
 def login():
     """Logs user into the session"""
 
-    email = request.form.get("email")
-    password = request.form.get("password")
-    username = request.form.get("username")
+    # email = request.form.get("email")
+    # password = request.form.get("password")
+    # username = request.form.get("username")
+    # user = crud.get_user_by_email(email)
+
+    content = request.get_json()
+    email = content['email']
+    password = content['password']
     user = crud.get_user_by_email(email)
 
     if not user or user.password != password:
@@ -71,7 +76,7 @@ def login():
     else:
         session["username"] = user.username
 
-        return redirect("/myprofile")
+        return redirect("/myprofile", 302, jsonify({'status':'ok'}))
 
 @app.route("/logout")
 def display_logout():
@@ -378,8 +383,8 @@ def display_delete():
     
     content = request.get_json()
     delete = content['deleteRatingId']
-    print("*"*75)
-    print(delete)
+    # print("*"*75)
+    # print(delete)
     crud.delete_rating_by_id(delete)
     db.session.commit()
 
