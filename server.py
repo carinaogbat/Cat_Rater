@@ -76,7 +76,7 @@ def login():
     else:
         session["username"] = user.username
 
-        return redirect("/myprofile", 302, jsonify({'status':'ok'}))
+        return (jsonify({'status':'ok'}))
 
 @app.route("/logout")
 def display_logout():
