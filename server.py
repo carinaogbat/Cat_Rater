@@ -60,11 +60,6 @@ def display_login_page():
 def login():
     """Logs user into the session"""
 
-    # email = request.form.get("email")
-    # password = request.form.get("password")
-    # username = request.form.get("username")
-    # user = crud.get_user_by_email(email)
-
     content = request.get_json()
     email = content['email']
     password = content['password']
