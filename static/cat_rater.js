@@ -16,7 +16,8 @@ document.querySelector('#login_form').addEventListener('submit', (evt)=>
         },
     })
     .then((response) => response.json())
-    .then((response) => console.log(JSON.stringify(response)));
+    .then((response) => 
+ console.log(JSON.stringify(response)));
 });
 
 // const testPhoto = document.querySelector('#photo-upload');
