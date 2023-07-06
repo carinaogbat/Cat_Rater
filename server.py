@@ -14,6 +14,7 @@ app = Flask(__name__)
 app.secret_key = "dev"
 app.jinja_env.undefined = StrictUndefined
 
+
 @app.route("/")
 def all_photos():
     """View all rated photos."""
@@ -65,10 +66,13 @@ def login():
     password = content['password']
     user = crud.get_user_by_email(email)
 
-    if not user or user.password != password:
-        flash("Error: the email or password you entered was incorrect", category="error")
-        return redirect("/login")
-    else:
+    if not user:
+        flash("Error: there is no account under this email, please sign up to continue", category="error")
+        return (jsonify({'status': 'invalid user'}))
+    if user.password != password:
+        flash("Invalid password, please try again", category="error")
+        return (jsonify({'status': 'invalid password'}))
+    elif user:
         session["username"] = user.username
 
         return (jsonify({'status':'ok'}))
@@ -87,8 +91,6 @@ def logout():
     if user_in_session:
         session["username"] = None
         flash("You have been signed out", category="message")
-    else:
-        flash("Error, you are not signed in", category="error")
 
     return redirect("/")
 

@@ -38,7 +38,10 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        alert(responseJson.status);
+        if (responseJson.status == 'ok'){
+            console.log(responseJson);
+            location.href = "/my_profile.html";
+        }
     });
 });
 
