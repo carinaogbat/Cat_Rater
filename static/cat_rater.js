@@ -1,7 +1,7 @@
 
 
 
-document.querySelector('#login_form').addEventListener('submit', (evt)=>
+document.querySelector('#login-form').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
     const loginInput = {
@@ -16,8 +16,14 @@ document.querySelector('#login_form').addEventListener('submit', (evt)=>
         },
     })
     .then((response) => response.json())
-    .then((response) => 
- console.log(JSON.stringify(response)));
+    .then((responseJson) => {
+        if (responseJson.status == 'ok'){
+            console.log(responseJson);
+        } else {
+            alert('You have entered an invalid password or email, please try again')
+        };
+        
+    });
 });
 
 // const testPhoto = document.querySelector('#photo-upload');
@@ -40,18 +46,12 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
     .then((responseJson) => {
         if (responseJson.status == 'ok'){
             console.log(responseJson);
-            location.href = "/my_profile.html";
-        }
+        };
+        
     });
 });
 
 // const signUpButton = document.querySelector('#signup-button')
-// signUpButton.addEventListener('click', (evt)=>
-// {
-//     evt.preventDefault();
-//     const fileInput = {
-//         email : document.querySelector('#signup-email').value,
-//         password : document.querySelector('#signup-password').value,
 //         username : document.querySelector('#signup-username').value,
 //     };
 //         console.log(fileInput)

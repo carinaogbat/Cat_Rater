@@ -59,23 +59,18 @@ def display_login_page():
 
 @app.route("/login", methods=["POST"])
 def login():
+
     """Logs user into the session"""
 
     content = request.get_json()
     email = content['email']
     password = content['password']
     user = crud.get_user_by_email(email)
-
-    if not user:
-        flash("Error: there is no account under this email, please sign up to continue", category="error")
-        return (jsonify({'status': 'invalid user'}))
-    if user.password != password:
-        flash("Invalid password, please try again", category="error")
-        return (jsonify({'status': 'invalid password'}))
-    elif user:
+    if user and user.password == password:
         session["username"] = user.username
-
-        return (jsonify({'status':'ok'}))
+        return (jsonify({'status' : 'ok'}))
+    else:
+        return (jsonify({'status' : 'invalid email or password'}))
 
 @app.route("/logout")
 def display_logout():
