@@ -19,6 +19,7 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
     .then((responseJson) => {
         if (responseJson.status == 'ok'){
             console.log(responseJson);
+            location.assign("/myprofile")
         } else {
             alert('You have entered an invalid password or email, please try again')
         };

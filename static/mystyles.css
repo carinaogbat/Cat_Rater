@@ -46,11 +46,11 @@ card {
     color: #25838F
 }
 
-.error {
+/* .error {
     text-align: center;
     text-emphasis-style: bold;
     color: maroon
-}
+} */
 .btn-primary{
     background-color:darkcyan;
     border-color: darkcyan;
