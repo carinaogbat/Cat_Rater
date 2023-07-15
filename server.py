@@ -64,6 +64,8 @@ def login():
 
     content = request.get_json()
     email = content['email']
+    print(content)
+    #prints {'email': 'OgBot@mail.com', 'password': 'test'}
     password = content['password']
     user = crud.get_user_by_email(email)
     if user and user.password == password:
@@ -81,13 +83,24 @@ def display_logout():
 @app.route("/logout", methods=["POST"])
 def logout():
     """Logs out a user"""
-
+    content = request.get_json()
+    # logout = content['logout']
+    content = request.json
+    print('*'*75)
+    print('*'*75)
+    print(content)
+    print('*'*75)
+    print('*'*75)
+    # print(content)
+    # print(content['logout'])
+    # # confirm_logout = content['logout']
+    # # print(confirm_logout)
     user_in_session=session.get("username")
     if user_in_session:
         session["username"] = None
-        flash("You have been signed out", category="message")
-
-    return redirect("/")
+        return (jsonify({'status' : 'ok'}))
+    else: 
+        return redirect("/")
 
 @app.route("/signup")
 def display_signup():

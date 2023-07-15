@@ -27,6 +27,33 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
     });
 });
 
+const testLogoutButton = document.querySelector('#logout-form')
+const testLogInButton = document.querySelector('#login-form')
+// console.log(testLogoutButton)
+document.querySelector('#logout-form').addEventListener('submit', (evt)=>
+{
+    evt.preventDefault();
+    const logoutInput = {
+        logout : "true",
+    };
+    fetch("/logout", {
+        method: 'POST',
+        body: JSON.stringify(logoutInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        if (responseJson.status == 'ok'){
+            // console.log(responseJson);
+            alert('You have been signed out');
+            location.assign('/')
+        };
+        
+    });
+});
+
 // const testPhoto = document.querySelector('#photo-upload');
 document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
 {
