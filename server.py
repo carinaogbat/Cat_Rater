@@ -59,7 +59,6 @@ def display_login_page():
 
 @app.route("/login", methods=["POST"])
 def login():
-
     """Logs user into the session"""
 
     content = request.get_json()
@@ -85,7 +84,6 @@ def logout():
     """Logs out a user"""
     content = request.get_json()
     # logout = content['logout']
-    content = request.json
     print('*'*75)
     print('*'*75)
     print(content)
@@ -98,7 +96,7 @@ def logout():
     user_in_session=session.get("username")
     if user_in_session:
         session["username"] = None
-        return (jsonify({'status' : 'ok'}))
+        return (jsonify({'status' : 'logged out'}))
     else: 
         return redirect("/")
 
@@ -160,12 +158,14 @@ def show_photo(photo_id):
     else:
         photo_average_rating = round(crud.get_photo_rating_average(photo_id))
         photo_rating = photo_average_rating
+
     username = session.get("username")
 
     if username is None:
         flash("You must be signed in to rate a cat.", category="message")
 
-    rating = request.form.get("rating")
+    content = request.get_json()
+    rating = int(content['rating'])
     photo_username = crud.get_user_by_id(photo.photo_id)
     if not rating:
         flash("Please enter a rating before clicking submit")
@@ -183,7 +183,7 @@ def show_photo(photo_id):
             flash(f"You rated this cat a {rating.score} out of 10!", category="rating-score")
             flash(f'How did we calculate that score? Every cat is AT LEAST a 10 so we added 10 points on!', category="rating-message")
 
-    return render_template("photo_details.html", photo=photo, photo_rating=photo_rating, photo_username=photo_username)
+    return jsonify({'status':'ok'})
 
 @app.route("/myprofile")
 def display_user_profile():

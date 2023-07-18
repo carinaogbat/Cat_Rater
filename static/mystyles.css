@@ -8,6 +8,13 @@ card {
 
 }
 
+.center-container {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+
+}
+
 .card-text {
     color: #8F7A67
 }

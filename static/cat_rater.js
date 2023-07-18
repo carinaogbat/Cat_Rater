@@ -6,7 +6,7 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
     evt.preventDefault();
     const loginInput = {
         email : document.querySelector('#login-email').value,
-        password : document.querySelector('#login-password').value
+        password : document.querySelector('#login-password').value,
     };
     fetch("/login", {
         method: 'POST',
@@ -27,8 +27,8 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
     });
 });
 
-const testLogoutButton = document.querySelector('#logout-form')
-const testLogInButton = document.querySelector('#login-form')
+// const testLogoutButton = document.querySelector('#logout-form')
+// const testLogInButton = document.querySelector('#login-form')
 // console.log(testLogoutButton)
 document.querySelector('#logout-form').addEventListener('submit', (evt)=>
 {
@@ -45,10 +45,10 @@ document.querySelector('#logout-form').addEventListener('submit', (evt)=>
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        if (responseJson.status == 'ok'){
+        if (responseJson.status == 'logged out'){
             // console.log(responseJson);
-            alert('You have been signed out');
             location.assign('/')
+            alert('You have been signed out');
         };
         
     });
@@ -164,32 +164,29 @@ button.addEventListener('click', (evt)=>
 );
     }
 
-// document.querySelector('#create-rating').addEventListener('click', (evt)=>
-// {
-//     evt.preventDefault();
-
-//     const response = confirm("Are you sure you want to create this rating?");
-
-//     if (response) {
+document.querySelector('#rating-form').addEventListener('submit', (evt)=>
+{
+    evt.preventDefault();
+    const ratingInput = {
+        rating : document.querySelector('#rating-value').value,
+    };
+    fetch("/photos/<photo_id>", {
+        method: 'POST',
+        body: JSON.stringify(ratingInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        if (responseJson.status == 'ok'){
+            console.log(responseJson);
+        } else {
+            alert('error')
+        };
         
-//         const photoRating = {
-//             createRating : document.querySelector('#rating-id').value,
-//         };
-//         fetch("/photos/<photo_id>", {
-//             method: 'POST',
-//             body: JSON.stringify(createRating),
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//         })
-//         .then((response) => response.json())
-//         .then((responseJson) => {
-//             alert(responseJson.status);
-//         });
-
-//         }
-//     }
-// );
+    });
+});
 
 const container = document.querySelector('.container');
 // The Scroll Event.
