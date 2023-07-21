@@ -36,23 +36,29 @@ document.querySelector('#logout-form').addEventListener('submit', (evt)=>
     const logoutInput = {
         logout : "true",
     };
-    fetch("/logout", {
-        method: 'POST',
-        body: JSON.stringify(logoutInput),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-        if (responseJson.status == 'logged out'){
-            // console.log(responseJson);
-            location.assign('/')
-            alert('You have been signed out');
-        };
+    console.log("Here's where I will send something.")
+    console.log(logoutInput)
+    // fetch("/logout", {
+    //     method: 'POST',
+    //     body: JSON.stringify(logoutInput),
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //     },
+//     })
+//     .then((response) => response.json())
+//     .then((responseJson) => {
+//         if (responseJson.status == 'ok'){
+//             // console.log(responseJson);
+            
+//             location.assign('/');
+//             alert('You have been signed out');
+//         } else {
+//             alert('Error, you are not signed in')
+//         }
+        
         
     });
-});
+// });
 
 // const testPhoto = document.querySelector('#photo-upload');
 document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
@@ -164,7 +170,8 @@ button.addEventListener('click', (evt)=>
 );
     }
 
-document.querySelector('#rating-form').addEventListener('submit', (evt)=>
+const ratingForm = document.querySelector('#rating-form')
+ratingForm.addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
     const ratingInput = {

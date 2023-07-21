@@ -24,14 +24,14 @@
     <div class="col">
     <div class="card">
       <img src="{{photo.url}}" class="card-img-top">
-      <div class="card-body">
-        <h5 class="card-title">{{photo.name}}</h5>
-        <p class="card-text"><strong>Rated {{photo['rating']}} out of 10!</strong></p>
-      </div>
-      <div class="card-body">
-        <p class="card-body">Rate this floof <a href="photos/{{photo['id']}}" class="card-link">here</a></p>
-      </div>
-      </div>
+        <div class="card-body">
+          <h5 class="card-title">{{photo.name}}</h5>
+          <p class="card-text"><strong>Rated {{photo['rating']}} out of 10!</strong></p>
+        </div>
+        <div class="card-body">
+          <p class="card-body">Rate this floof <a href="photos/{{photo['id']}}" class="card-link">here</a></p>
+        </div>
+    </div>
       <br>
     </div>
     {% endfor %}

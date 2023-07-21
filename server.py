@@ -96,9 +96,9 @@ def logout():
     user_in_session=session.get("username")
     if user_in_session:
         session["username"] = None
-        return (jsonify({'status' : 'logged out'}))
-    else: 
-        return redirect("/")
+        return (jsonify({'status' : 'ok'}))
+    else:
+        return (jsonify({'status' : 'invalid user'}))
 
 @app.route("/signup")
 def display_signup():
@@ -131,7 +131,7 @@ def sign_up():
         db.session.commit()
         flash("Account created", category="message")
 
-    return jsonify({'status':'ok'})
+        return jsonify({'status':'ok'})
 
 @app.route("/photos/<photo_id>")
 def display_photo_details(photo_id):

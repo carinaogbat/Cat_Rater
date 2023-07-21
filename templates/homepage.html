@@ -18,27 +18,27 @@
 <div class="container">
   <div class="row row-cols-md-4 row-cols-sm-2 row-cols-1">
   {% for photo in photos_with_ratings %}
-  <div class="col">
-  <div class="card">
-    <img src="{{photo['url']}}" class="card-img-top">
-    <div class="card-body">
-      <h5 class="card-title">{{photo['name']}}</h5>
-      {% if (photo['rating'] is number) %}
-      <p class="card-text"><strong>Rated {{photo['rating']}} out of 10! Submitted by: </strong><a href="/users/{{photo['username']}}" class="card-link">{{photo['username']}}</a></p>
-      </div>
+    <div class="col">
+      <div class="card">
+        <img src="{{photo['url']}}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{photo['name']}}</h5>
+            {% if (photo['rating'] is number) %}
+            <p class="card-text"><strong>Rated {{photo['rating']}} out of 10! Submitted by: </strong><a href="/users/{{photo['username']}}" class="card-link">{{photo['username']}}</a></p>
+          </div>
       {% else %}
-      <p class="card-text"><strong>This kitty has not been rated yet. Submitted by: </strong> <a href="/users/{{photo['username']}}" class="card-link">{{photo['username']}}</a></p>
-      </div>
+          <p class="card-text"><strong>This kitty has not been rated yet. Submitted by: </strong> <a href="/users/{{photo['username']}}" class="card-link">{{photo['username']}}</a></p>
+          </div>
       {% endif %}
-    <div class="card-body">
-      <a href="/photos/{{photo['id']}}" class="card-link">Rate {{photo['name']}}</a>
+            <div class="card-body">
+              <a href="/photos/{{photo['id']}}" class="card-link">Rate {{photo['name']}}</a>
 
+            </div>
+      </div>
+      <br>
     </div>
-    </div>
-    <br>
-  </div>
   {% endfor %}
-</div>
+  </div>
 </div>
 
 {% endblock %}
