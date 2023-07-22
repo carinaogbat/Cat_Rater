@@ -83,7 +83,7 @@ def display_logout():
 def logout():
     """Logs out a user"""
     content = request.get_json()
-    # logout = content['logout']
+    logout = content['logout']
     print('*'*75)
     print('*'*75)
     print(content)
@@ -94,11 +94,12 @@ def logout():
     # # confirm_logout = content['logout']
     # # print(confirm_logout)
     user_in_session=session.get("username")
-    if user_in_session:
-        session["username"] = None
-        return (jsonify({'status' : 'ok'}))
+    if logout == "true":
+        if user_in_session:
+            session["username"] = None
+            return (jsonify({'status' : 'ok'}))
     else:
-        return (jsonify({'status' : 'invalid user'}))
+        return (jsonify({'status' : 'invalid'}))
 
 @app.route("/signup")
 def display_signup():

@@ -1,6 +1,7 @@
 
 
-
+const logIn = document.querySelector('#login-form')
+if (logIn) {
 document.querySelector('#login-form').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
@@ -26,52 +27,31 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
         
     });
 });
+}
 
-// const testLogoutButton = document.querySelector('#logout-form')
-// const testLogInButton = document.querySelector('#login-form')
-// console.log(testLogoutButton)
+//Working query selector
+// document.querySelector('#logout-form').addEventListener('submit', (evtLogOut) => 
+// { 
+//     evtLogOut.preventDefault();
+//     const logoutInput = {
+//         logout : true,
+//     };
+//     console.log("Event listener working");
+//     console.log(logoutInput);
+
+// });
+
+const logOut = document.querySelector('#logout-form')
+if (logOut) {
 document.querySelector('#logout-form').addEventListener('submit', (evt)=>
 {
     evt.preventDefault();
     const logoutInput = {
         logout : "true",
     };
-    console.log("Here's where I will send something.")
-    console.log(logoutInput)
-    // fetch("/logout", {
-    //     method: 'POST',
-    //     body: JSON.stringify(logoutInput),
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //     },
-//     })
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//         if (responseJson.status == 'ok'){
-//             // console.log(responseJson);
-            
-//             location.assign('/');
-//             alert('You have been signed out');
-//         } else {
-//             alert('Error, you are not signed in')
-//         }
-        
-        
-    });
-// });
-
-// const testPhoto = document.querySelector('#photo-upload');
-document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
-{
-    evt.preventDefault();
-    const fileInput = {
-        file : document.querySelector('file').value,
-        text : document.querySelector('#photo-text').value,
-        name : document.querySelector('#photo-name').value
-    };
-    fetch("/myprofile", {
+    fetch("/logout", {
         method: 'POST',
-        body: JSON.stringify(fileInput),
+        body: JSON.stringify(logoutInput),
         headers: {
             'Content-Type': 'application/json',
         },
@@ -80,10 +60,40 @@ document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
     .then((responseJson) => {
         if (responseJson.status == 'ok'){
             console.log(responseJson);
+            alert("You have been signed out")
+            location.assign("/")
+        } else {
+            alert('You are not signed in')
         };
         
     });
 });
+}
+
+// const testPhoto = document.querySelector('#photo-upload');
+// document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
+// {
+//     evt.preventDefault();
+//     const fileInput = {
+//         file : document.querySelector('file').value,
+//         text : document.querySelector('#photo-text').value,
+//         name : document.querySelector('#photo-name').value
+//     };
+//     fetch("/myprofile", {
+//         method: 'POST',
+//         body: JSON.stringify(fileInput),
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     })
+//     .then((response) => response.json())
+//     .then((responseJson) => {
+//         if (responseJson.status == 'ok'){
+//             console.log(responseJson);
+//         };
+        
+//     });
+// });
 
 // const signUpButton = document.querySelector('#signup-button')
 //         username : document.querySelector('#signup-username').value,
