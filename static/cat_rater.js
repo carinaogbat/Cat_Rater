@@ -16,7 +16,7 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        if (responseJson.status == 'ok'){
+        if (responseJson.status === 'ok'){
             console.log(responseJson);
             location.assign("/myprofile")
         } 
@@ -57,7 +57,7 @@ document.querySelector('#logout-form').addEventListener('submit', (evt)=>
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        if (responseJson.status == 'ok'){
+        if (responseJson.status === 'ok'){
             console.log(responseJson);
             alert("You have been signed out")
             location.assign("/")
@@ -100,7 +100,8 @@ if (signUp) { signUp.addEventListener('submit', (evt) =>
     evt.preventDefault();
     const signUpPassword = document.querySelector('#signup-password').value;
     const signUpEmail = document.querySelector('#signup-email').value;
-    const signUpUsername = document.querySelector('#signup-username').value
+    const signUpUsername = document.querySelector('#signup-username').value;
+
     if (signUpPassword.length < 4) {
         alert("Error: Your password must be at least four characters long.")
     };
@@ -108,7 +109,7 @@ if (signUp) { signUp.addEventListener('submit', (evt) =>
     const signUpInput = {
         email : signUpEmail,
         password : signUpPassword,
-        username : document.querySelector('#signup-username').value,
+        username : signUpUsername,
     };
         console.log(signUpInput);
     fetch("/signup", {
@@ -120,9 +121,14 @@ if (signUp) { signUp.addEventListener('submit', (evt) =>
     })
     .then((response) => response.json())
     .then((responseJson) => {
-        if (responseJson.status == 'ok'){
-            alert("Account successfully created")
-        };
+        if (responseJson.status === 'ok'){
+            alert("Account successfully created");
+            location.assign("/myprofile");
+        }
+        if (responseJson.status === 'user in database'){
+            alert("Error: There is already an account with this username or email, please login or choose a different username.")
+        }
+
     });
 });
 }

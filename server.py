@@ -99,27 +99,30 @@ def display_signup():
         flash("You are already signed in", category="message")
         return redirect("/myprofile")
     else:
-
         return render_template("signup.html")
 
 @app.route("/signup", methods=["POST"])
 def sign_up():
     """Signs a user up and adds them to the database"""
 
-    user = session.get("username")
+    # user = session.get("username")
     content = request.get_json()
-    email = content['email'].lower()
-    username = content['username'].lower()
-    password = content['password'].lower()
+    print(content)
+    print("*"*300)
+    email = content['email']
+    username = content['username']
+    password = content['password']
+    active_username = crud.get_user_by_username(username)
+    active_email = crud.get_user_by_email(email)
 
-    if user:
-        flash("Error, there is already an account with this email, please try again", category="error")
-        return redirect("/myprofile")
+    if active_username or active_email:
+        return jsonify({'status' : 'user in database'})
     else:
         user = crud.create_user(username=username, email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        flash("Account created", category="message")
+        # flash("Account created", category="message")
+        session['username'] = user.username
 
         return jsonify({'status':'ok'})
 
