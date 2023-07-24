@@ -2,13 +2,14 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block body %}
-  <h1>Welcome to the cat rater!</h1>
+  <h1>Welcome to the Rate This Cat!</h1>
   <h2>Where you rate the most boopable floofs!</h2>
   <br>
  <h3>Create your account below:</h3>
  <br>
 
-  <div id="signup" style="text-align:center">
+  <div style="text-align:center">
+    <form id="signup-form">
     <br>
         Email <input type="text" name ="email" id="signup-email">
     <br>
@@ -20,5 +21,6 @@
     <br>
     <br>
       <button class="btn btn-primary btn-sm" id="signup-button" type="submit" style="text-align:right">Submit</button>
+    </form>
   </div>
 {% endblock %}

@@ -63,8 +63,6 @@ def login():
 
     content = request.get_json()
     email = content['email']
-    print(content)
-    #prints {'email': 'OgBot@mail.com', 'password': 'test'}
     password = content['password']
     user = crud.get_user_by_email(email)
     if user and user.password == password:
@@ -84,16 +82,7 @@ def logout():
     """Logs out a user"""
     content = request.get_json()
     logout = content['logout']
-    print('*'*75)
-    print('*'*75)
-    print(content)
-    print('*'*75)
-    print('*'*75)
-    # print(content)
-    # print(content['logout'])
-    # # confirm_logout = content['logout']
-    # # print(confirm_logout)
-    user_in_session=session.get("username")
+    user_in_session = session.get("username")
     if logout == "true":
         if user_in_session:
             session["username"] = None
@@ -150,7 +139,7 @@ def display_photo_details(photo_id):
 
 @app.route("/photos/<photo_id>", methods=["POST"])
 def show_photo(photo_id):
-    """Show details on a particular photo."""
+    """Show individual photo details."""
 
     photo = crud.get_photo_by_id(photo_id)
 
@@ -161,7 +150,6 @@ def show_photo(photo_id):
         photo_rating = photo_average_rating
 
     username = session.get("username")
-
     if username is None:
         flash("You must be signed in to rate a cat.", category="message")
 

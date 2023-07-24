@@ -1,5 +1,3 @@
-
-
 const logIn = document.querySelector('#login-form')
 if (logIn) {
 document.querySelector('#login-form').addEventListener('submit', (evt)=>
@@ -21,7 +19,8 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
         if (responseJson.status == 'ok'){
             console.log(responseJson);
             location.assign("/myprofile")
-        } else {
+        } 
+         else {
             alert('You have entered an invalid password or email, please try again')
         };
         
@@ -95,24 +94,39 @@ document.querySelector('#logout-form').addEventListener('submit', (evt)=>
 //     });
 // });
 
-// const signUpButton = document.querySelector('#signup-button')
-//         username : document.querySelector('#signup-username').value,
-//     };
-//         console.log(fileInput)
-//     fetch("/signup", {
-//         method: 'POST',
-//         body: JSON.stringify(fileInput),
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//         if (responseJson.status == 'ok'){
-//             alert("Account successfully created")
-//         }
-//     });
-// });
+const signUp = document.querySelector('#signup-form')
+if (signUp) { signUp.addEventListener('submit', (evt) =>
+{
+    evt.preventDefault();
+    const signUpPassword = document.querySelector('#signup-password').value;
+    const signUpEmail = document.querySelector('#signup-email').value;
+    const signUpUsername = document.querySelector('#signup-username').value
+    if (signUpPassword.length < 4) {
+        alert("Error: Your password must be at least four characters long.")
+    };
+
+    const signUpInput = {
+        email : signUpEmail,
+        password : signUpPassword,
+        username : document.querySelector('#signup-username').value,
+    };
+        console.log(signUpInput);
+    fetch("/signup", {
+        method: 'POST',
+        body: JSON.stringify(signUpInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        if (responseJson.status == 'ok'){
+            alert("Account successfully created")
+        };
+    });
+});
+}
+
 
 
 const photoDeleteButtons = document.querySelectorAll('#delete-photo-button')
@@ -180,30 +194,32 @@ button.addEventListener('click', (evt)=>
 );
     }
 
-const ratingForm = document.querySelector('#rating-form')
-ratingForm.addEventListener('submit', (evt)=>
-{
-    evt.preventDefault();
-    const ratingInput = {
-        rating : document.querySelector('#rating-value').value,
-    };
-    fetch("/photos/<photo_id>", {
-        method: 'POST',
-        body: JSON.stringify(ratingInput),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-        if (responseJson.status == 'ok'){
-            console.log(responseJson);
-        } else {
-            alert('error')
-        };
+// const ratingForm = document.querySelector('#rating-form')
+// if (ratingForm) {
+// ratingForm.addEventListener('submit', (evt)=>
+// {
+//     evt.preventDefault();
+//     const ratingInput = {
+//         rating : document.querySelector('#rating-value').value,
+//     };
+//     fetch("/photos/<photo_id>", {
+//         method: 'POST',
+//         body: JSON.stringify(ratingInput),
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//     })
+//     .then((response) => response.json())
+//     .then((responseJson) => {
+//         if (responseJson.status == 'ok'){
+//             console.log(responseJson);
+//         } else {
+//             alert('error')
+//         };
         
-    });
-});
+//     });
+// });
+// }
 
 const container = document.querySelector('.container');
 // The Scroll Event.
