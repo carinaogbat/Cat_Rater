@@ -105,10 +105,7 @@ def display_signup():
 def sign_up():
     """Signs a user up and adds them to the database"""
 
-    # user = session.get("username")
     content = request.get_json()
-    print(content)
-    print("*"*300)
     email = content['email']
     username = content['username']
     password = content['password']
@@ -121,7 +118,6 @@ def sign_up():
         user = crud.create_user(username=username, email=email, password=password)
         db.session.add(user)
         db.session.commit()
-        # flash("Account created", category="message")
         session['username'] = user.username
 
         return jsonify({'status':'ok'})
@@ -251,9 +247,11 @@ def show_user_profile():
             photo_with_rating['name'] = photo.name
             photo_with_rating['time_created'] = photo.time_created
             photos_with_ratings.append(photo_with_rating)
-
-    text = request.form.get("text")
-    name = request.form.get("name").capitalize()
+    content = request.get_json()
+    # text = request.form.get("text")
+    # name = request.form.get("name").capitalize()
+    text = content['text']
+    name = content['name'].capitalize()
     my_file = request.files["my-file"]
     result = cloudinary.uploader.upload(my_file, api_key=CLOUDINARY_KEY, api_secret=CLOUDINARY_SECRET, cloud_name=CLOUD_NAME)
     img_url = result['secure_url']
@@ -309,16 +307,19 @@ def display_search():
 def search():
     """Searches for user chosen parameters"""
 
-    search_text = request.form.get("search-text")
-    search_by = request.form.get("search")
+    content = request.get_json()
+    print(content)
+    # search_text = request.form.get("search-text")
+    search_by_pet = content['petName']
+    search_by_user = content['userName']
     user = {}
     photos_with_ratings = []
 
-    if search_by == "username":
-        user = crud.get_user_by_username(search_text)
+    if search_by_user:
+        user = crud.get_user_by_username(content['userName'])
 
-    if search_by == "pet-name":
-        photos = crud.get_photos_by_pet_name(search_text.capitalize())
+    if search_by_pet:
+        photos = crud.get_photos_by_pet_name(search_by_pet.capitalize())
         for photo in photos:
             if crud.get_photo_rating_average(photo.photo_id) == None:
                 rating = "(whoops this kitty has not been rated yet)"

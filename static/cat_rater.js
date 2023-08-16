@@ -28,18 +28,6 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
 });
 }
 
-//Working query selector
-// document.querySelector('#logout-form').addEventListener('submit', (evtLogOut) => 
-// { 
-//     evtLogOut.preventDefault();
-//     const logoutInput = {
-//         logout : true,
-//     };
-//     console.log("Event listener working");
-//     console.log(logoutInput);
-
-// });
-
 const logOut = document.querySelector('#logout-form')
 if (logOut) {
 document.querySelector('#logout-form').addEventListener('submit', (evt)=>
@@ -69,30 +57,36 @@ document.querySelector('#logout-form').addEventListener('submit', (evt)=>
 });
 }
 
-// const testPhoto = document.querySelector('#photo-upload');
-// document.querySelector('#photo-upload').addEventListener('submit', (evt)=>
-// {
-//     evt.preventDefault();
-//     const fileInput = {
-//         file : document.querySelector('file').value,
-//         text : document.querySelector('#photo-text').value,
-//         name : document.querySelector('#photo-name').value
-//     };
-//     fetch("/myprofile", {
-//         method: 'POST',
-//         body: JSON.stringify(fileInput),
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//         if (responseJson.status == 'ok'){
-//             console.log(responseJson);
-//         };
+const photoUpload = document.querySelector('#photo-upload');
+if (photoUpload) {
+photoUpload.addEventListener('submit', (evt)=>
+{
+    evt.preventDefault();
+    const reader = new FileReader();
+    reader.addEventListener('load', (evt) => {
+        img.src = evt.target.result;
+    });
+    const fileInput = {
+        file : reader.readAsDataURL('file-upload-button').value,
+        text : document.querySelector('#photo-text').value,
+        name : document.querySelector('#photo-name').value
+    };
+    fetch("/myprofile", {
+        method: 'POST',
+        body: JSON.stringify(fileInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        if (responseJson.status == 'ok'){
+            console.log(responseJson);
+        };
         
-//     });
-// });
+    });
+});
+};
 
 const signUp = document.querySelector('#signup-form')
 if (signUp) { signUp.addEventListener('submit', (evt) =>
@@ -132,7 +126,6 @@ if (signUp) { signUp.addEventListener('submit', (evt) =>
     });
 });
 }
-
 
 
 const photoDeleteButtons = document.querySelectorAll('#delete-photo-button')
@@ -226,6 +219,40 @@ button.addEventListener('click', (evt)=>
 //     });
 // });
 // }
+
+
+const search = document.querySelector('#search-select')
+if (search) { search.addEventListener('submit', (evt) =>
+{
+    const searchItem = search.options[search.selectedIndex].value;
+    evt.preventDefault();
+        if (search.selected === "username") {
+            const searchInput = {
+            userName : document.querySelector('#search-text').value,
+        }
+        } else if (search.selected === "pet-name") {
+            const searchInput = {
+            petName : document.querySelector('#search-text').value,
+            }
+        };
+
+        console.log(search);
+    fetch("/search", {
+        method: 'POST',
+        body: JSON.stringify(searchInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        if (responseJson.status === 'ok'){
+            console.log("status: ok");
+        }
+    });
+});
+}
+
 
 const container = document.querySelector('.container');
 // The Scroll Event.
