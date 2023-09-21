@@ -1,3 +1,4 @@
+// WORKING LOGIN FORM
 const logIn = document.querySelector('#login-form')
 if (logIn) {
 document.querySelector('#login-form').addEventListener('submit', (evt)=>
@@ -28,6 +29,7 @@ document.querySelector('#login-form').addEventListener('submit', (evt)=>
 });
 }
 
+// WORKING LOGOUT FORM
 const logOut = document.querySelector('#logout-form')
 if (logOut) {
 document.querySelector('#logout-form').addEventListener('submit', (evt)=>
@@ -57,6 +59,7 @@ document.querySelector('#logout-form').addEventListener('submit', (evt)=>
 });
 }
 
+// PHOTO UPLOAD FORM (IN PROGRESS)
 const photoUpload = document.querySelector('#photo-upload');
 if (photoUpload) {
 photoUpload.addEventListener('submit', (evt)=>
@@ -88,6 +91,7 @@ photoUpload.addEventListener('submit', (evt)=>
 });
 };
 
+// WORKING SIGN UP FORM
 const signUp = document.querySelector('#signup-form')
 if (signUp) { signUp.addEventListener('submit', (evt) =>
 {
@@ -127,7 +131,7 @@ if (signUp) { signUp.addEventListener('submit', (evt) =>
 });
 }
 
-
+// WORKING PHOTO DELETE FORM
 const photoDeleteButtons = document.querySelectorAll('#delete-photo-button')
 for (const button of photoDeleteButtons) {
 
@@ -161,7 +165,7 @@ button.addEventListener('click', (evt)=>
     
 }
 
-
+// RATING DELETE FORM (IN PROGRESS)
 const ratingDeleteButtons = document.querySelectorAll('#delete-rating-button')
 for (const button of ratingDeleteButtons) {
 button.addEventListener('click', (evt)=>
@@ -220,40 +224,7 @@ button.addEventListener('click', (evt)=>
 // });
 // }
 
-
-const search = document.querySelector('#search-select')
-if (search) { search.addEventListener('submit', (evt) =>
-{
-    const searchItem = search.options[search.selectedIndex].value;
-    evt.preventDefault();
-        if (search.selected === "username") {
-            const searchInput = {
-            userName : document.querySelector('#search-text').value,
-        }
-        } else if (search.selected === "pet-name") {
-            const searchInput = {
-            petName : document.querySelector('#search-text').value,
-            }
-        };
-
-        console.log(search);
-    fetch("/search", {
-        method: 'POST',
-        body: JSON.stringify(searchInput),
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-        if (responseJson.status === 'ok'){
-            console.log("status: ok");
-        }
-    });
-});
-}
-
-
+// INFINITE SCROLL
 const container = document.querySelector('.container');
 // The Scroll Event.
 window.addEventListener('scroll',()=>{

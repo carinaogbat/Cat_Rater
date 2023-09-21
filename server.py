@@ -307,19 +307,16 @@ def display_search():
 def search():
     """Searches for user chosen parameters"""
 
-    content = request.get_json()
-    print(content)
-    # search_text = request.form.get("search-text")
-    search_by_pet = content['petName']
-    search_by_user = content['userName']
+    search_text = request.form.get("search-text")
+    search_by = request.form.get("search")
     user = {}
     photos_with_ratings = []
 
-    if search_by_user:
-        user = crud.get_user_by_username(content['userName'])
+    if search_by == "username":
+        user = crud.get_user_by_username(search_text)
 
-    if search_by_pet:
-        photos = crud.get_photos_by_pet_name(search_by_pet.capitalize())
+    if search_by == "pet-name":
+        photos = crud.get_photos_by_pet_name(search_text.capitalize())
         for photo in photos:
             if crud.get_photo_rating_average(photo.photo_id) == None:
                 rating = "(whoops this kitty has not been rated yet)"
