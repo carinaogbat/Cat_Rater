@@ -153,7 +153,8 @@ def show_photo(photo_id):
         flash("You must be signed in to rate a cat.", category="message")
 
     content = request.get_json()
-    rating = int(content['rating'])
+    print(content)
+    rating = int(content['ratingInput'])
     photo_username = crud.get_user_by_id(photo.photo_id)
     if not rating:
         flash("Please enter a rating before clicking submit")

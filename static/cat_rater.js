@@ -165,7 +165,7 @@ button.addEventListener('click', (evt)=>
     
 }
 
-// RATING DELETE FORM (IN PROGRESS)
+// RATING DELETE FORM
 const ratingDeleteButtons = document.querySelectorAll('#delete-rating-button')
 for (const button of ratingDeleteButtons) {
 button.addEventListener('click', (evt)=>
@@ -197,32 +197,37 @@ button.addEventListener('click', (evt)=>
 );
     }
 
-// const ratingForm = document.querySelector('#rating-form')
-// if (ratingForm) {
-// ratingForm.addEventListener('submit', (evt)=>
-// {
-//     evt.preventDefault();
-//     const ratingInput = {
-//         rating : document.querySelector('#rating-value').value,
-//     };
-//     fetch("/photos/<photo_id>", {
-//         method: 'POST',
-//         body: JSON.stringify(ratingInput),
-//         headers: {
-//             'Content-Type': 'application/json',
-//         },
-//     })
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//         if (responseJson.status == 'ok'){
-//             console.log(responseJson);
-//         } else {
-//             alert('error')
-//         };
+const ratingForm = document.querySelector('#rating-form')
+if (ratingForm) {
+ratingForm.addEventListener('submit', (evt)=>
+{
+    evt.preventDefault();
+
+    const response = confirm("Ready to rate this kitty?")
+    if (response) {
+    const ratingInput = {
+        rating : document.querySelector('#rating-value').value,
+    };
+    console.log(ratingInput)
+    fetch("/photos/<photo_id>", {
+        method: 'POST',
+        body: JSON.stringify(ratingInput),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        if (responseJson.status == 'ok'){
+            console.log(responseJson);
+        } else {
+            alert('error')
+        };
         
-//     });
-// });
-// }
+    });
+}
+});
+}
 
 // INFINITE SCROLL
 const container = document.querySelector('.container');
